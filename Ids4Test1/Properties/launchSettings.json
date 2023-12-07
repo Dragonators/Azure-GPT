@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Ids4Test1": {
+      "commandName": "Project",
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "dotnetRunMessages": true,
+      "applicationUrl": "https://localhost:6001"
+    }
+  }
+}
