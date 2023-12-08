@@ -4,6 +4,9 @@ using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services.KeyManagement;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -153,10 +156,22 @@ namespace IdentityServer
 			//	!= null) 
 			//return;
 			//Stopwatch mywatch = Stopwatch.StartNew();
+
+			var baseUser = AdminUsers.Users.First();
+
+		    // var identityContext = FindGenericBaseType(typeof(ApplicationDbContext), typeof(IdentityDbContext<,,,,,,,>));
+			//Type of store = typeof(UserStore<,,,,,,,,>).MakeGenericType(typeof(ApplicationUser), typeof(IdentityRole), typeof(ApplicationDbContext),
+			//	identityContext.GenericTypeArguments[2],
+			//	identityContext.GenericTypeArguments[3],
+			//	identityContext.GenericTypeArguments[4],
+			//	identityContext.GenericTypeArguments[5],
+			//	identityContext.GenericTypeArguments[7],
+			//	identityContext.GenericTypeArguments[6]);
+
+			dynamic store = services.GetRequiredService<IUserStore<ApplicationUser>>();
 			try
 			{
-				var baseUser = AdminUsers.Users.First();
-
+				store.AutoSaveChanges = false;
 				for (int i = 0; i < 200; i++)
 				{
 					string s = JsonSerializer.Serialize(baseUser);
@@ -170,8 +185,18 @@ namespace IdentityServer
 				foreach (var user in AdminUsers.Users)
 				{
 					await userManager.CreateAsync(user, Constants.pwd);
+				}
+				await services.GetRequiredService<ApplicationDbContext>().SaveChangesAsync();
+				foreach (var user in AdminUsers.Users)
+				{
 					await userManager.AddToRoleAsync(user, Constants.Admin);
 				}
+				await services.GetRequiredService<ApplicationDbContext>().SaveChangesAsync();
+				//foreach (var user in AdminUsers.Users)
+				//{
+				//	await userManager.CreateAsync(user, Constants.pwd);
+				//	await userManager.AddToRoleAsync(user, Constants.Admin);
+				//}
 				mywatch.Stop();
 				Log.Information($"First cost {mywatch}");
 				//await DelAdmin(userManager);
@@ -188,6 +213,7 @@ namespace IdentityServer
 				//	listOfTasks.Add(userManager.DeleteAsync(user));
 				//}
 				//await Task.WhenAll(listOfTasks);
+				store.AutoSaveChanges = true;
 				foreach (var user in userManager.Users.ToList())
 				{
 					await userManager.DeleteAsync(user);
@@ -208,6 +234,20 @@ namespace IdentityServer
 		{
 			public const string Admin = "Administrator";
 			public const string pwd = "123";
+		}
+		private static Type? FindGenericBaseType(Type currentType, Type genericBaseType)
+		{
+			Type? type = currentType;
+			while (type != null)
+			{
+				var genericType = type.IsGenericType ? type.GetGenericTypeDefinition() : null;
+				if (genericType != null && genericType == genericBaseType)
+				{
+					return type;
+				}
+				type = type.BaseType;
+			}
+			return null;
 		}
 
 	}
