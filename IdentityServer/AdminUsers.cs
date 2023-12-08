@@ -6,12 +6,13 @@ using IdentityModel;
 using System.Collections.Generic;
 using System.Text.Json;
 using IdentityServer.Model;
+using static Duende.IdentityServer.Models.IdentityResources;
 
-namespace IdentityServerHost.Quickstart.UI
+namespace IdentityServer
 {
-    public class AdminUsers
-    {
-        public static List<ApplicationUser> Users
+	public class AdminUsers
+	{
+		/*public static List<ApplicationUser> Users
         {
             get
             {
@@ -37,5 +38,24 @@ namespace IdentityServerHost.Quickstart.UI
                 };
             }
         }
-    }
+        */
+		public static List<ApplicationUser> Users = new List<ApplicationUser>
+		{
+            new ApplicationUser
+			{
+			    Address=JsonSerializer.Serialize(new
+		        {
+			        street_address = "One Hacker Way",
+			        locality = "Heidelberg",
+			        postal_code = 69118,
+			        country = "Germany"
+		        }),
+				Email="BobSmith@email.com",
+				Name="Bob Smith",
+				GivenName="Bob",
+				FamilyName="Smith",
+				UserName="bob"
+			}
+		};
+	}
 }

@@ -1,15 +1,21 @@
 ﻿using Duende.IdentityServer.EntityFramework.DbContexts;
 using Duende.IdentityServer.EntityFramework.Mappers;
 using Duende.IdentityServer.Models;
+using Duende.IdentityServer.Services.KeyManagement;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+using Serilog;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection.Metadata;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Text.Json;
 
 namespace IdentityServer
 {
 	public class SeedData
 	{
-		public static void InitializeDatabase(IApplicationBuilder app)
+		public static async Task InitializeDatabase(IApplicationBuilder app)
 		{
 			/*using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
 			{
@@ -30,6 +36,7 @@ namespace IdentityServer
 		    }*/
 			//ChangeData(app.ApplicationServices.GetService<IServiceScopeFactory>());
 			ChangeData_(app.ApplicationServices.GetService<IServiceScopeFactory>());
+			await InitializeUserAsync(app.ApplicationServices.CreateScope().ServiceProvider);
 		}
 		//ConfigurationDbContext Data Change
 		private static void ChangeData(IServiceScopeFactory serviceScopeFactory)
@@ -128,7 +135,7 @@ namespace IdentityServer
 			var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 			await EnsureRolesAsync(roleManager);
 			var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-			await EnsureAdminAsync(userManager);
+			await EnsureAdminAsync(userManager,services);
 		}
 		private static async Task EnsureRolesAsync(RoleManager<IdentityRole> roleManager)
 		{
@@ -138,16 +145,70 @@ namespace IdentityServer
 
 			await roleManager.CreateAsync(new IdentityRole(Constants.Admin));
 		}
-		private static async Task EnsureAdminAsync(UserManager<ApplicationUser> userManager)
+		private static async Task EnsureAdminAsync(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
-			var Admin = await userManager.Users
-				.Where(x => x. == "admin@todo.local")
-				.SingleOrDefaultAsync();
-			if (Admin != null) return;
+			//if ((await userManager.Users
+			//	.Where(x => x.UserName == "bob")
+			//	.SingleOrDefaultAsync()) 
+			//	!= null) 
+			//return;
+			//Stopwatch mywatch = Stopwatch.StartNew();
+			try
+			{
+				var baseUser = AdminUsers.Users.First();
+
+				for (int i = 0; i < 200; i++)
+				{
+					string s = JsonSerializer.Serialize(baseUser);
+					var iu = JsonSerializer.Deserialize<ApplicationUser>(s);
+					iu.UserName += i.ToString();
+					iu.Id = Guid.NewGuid().ToString();
+					AdminUsers.Users.Add(iu);
+				}
+
+				Stopwatch mywatch = Stopwatch.StartNew();
+				foreach (var user in AdminUsers.Users)
+				{
+					await userManager.CreateAsync(user, Constants.pwd);
+					await userManager.AddToRoleAsync(user, Constants.Admin);
+				}
+				mywatch.Stop();
+				Log.Information($"First cost {mywatch}");
+				//await DelAdmin(userManager);
+			}
+			catch (Exception ex)
+			{
+				Log.Information(ex.Message);
+			}
+			finally
+			{
+				//var listOfTasks = new List<Task>();
+				//foreach (var user in userManager.Users.ToList())
+				//{					
+				//	listOfTasks.Add(userManager.DeleteAsync(user));
+				//}
+				//await Task.WhenAll(listOfTasks);
+				foreach (var user in userManager.Users.ToList())
+				{
+					await userManager.DeleteAsync(user);
+				}
+			}
+		}
+		private static async Task DelAdmin(UserManager<ApplicationUser> userManager)
+		{
+			var Admins = await userManager.GetUsersInRoleAsync(Constants.Admin);
+			var listOfTasks = new List<Task>();
+			foreach (var user in Admins)
+			{
+				listOfTasks.Add(userManager.DeleteAsync(user));
+			}
+			await Task.WhenAll(listOfTasks);
 		}
 		private static class Constants
 		{
 			public const string Admin = "Administrator";
+			public const string pwd = "123";
 		}
+
 	}
 }

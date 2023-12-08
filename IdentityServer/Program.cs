@@ -19,6 +19,7 @@ try
 	var app = builder
 		.ConfigureServices()
 		.ConfigurePipeline();
+	await SeedData.InitializeDatabase(app);
 	app.Run();
 }
 catch (Exception ex)

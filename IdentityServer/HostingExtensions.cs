@@ -1,5 +1,3 @@
-using Duende.IdentityServer.EntityFramework.DbContexts;
-using Duende.IdentityServer.EntityFramework.Mappers;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
@@ -14,7 +12,7 @@ namespace IdentityServer
 		{
 			var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
-			var Sqlbuilder=new SqlConnectionStringBuilder();
+			var Sqlbuilder = new SqlConnectionStringBuilder();
 			Sqlbuilder.DataSource = @"sha-xhji-d1\SQLEXPRESS";
 			Sqlbuilder.IntegratedSecurity = true;
 			Sqlbuilder.InitialCatalog = "IdentityServer";
@@ -24,7 +22,14 @@ namespace IdentityServer
 
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Sqlbuilder.ConnectionString));
-			builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+			builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
+			{
+				opt.Password.RequireNonAlphanumeric = false;
+				opt.Password.RequiredLength = 1;
+				opt.Password.RequireUppercase = false;
+				opt.Password.RequireLowercase = false;
+
+			})
 			.AddEntityFrameworkStores<ApplicationDbContext>()
 			.AddDefaultTokenProviders();
 
@@ -64,7 +69,6 @@ namespace IdentityServer
 			{
 				app.UseDeveloperExceptionPage();
 			}
-			SeedData.InitializeDatabase(app);
 			app.UseStaticFiles();//VIEW
 			app.UseRouting();//VIEW
 
