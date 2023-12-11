@@ -150,29 +150,14 @@ namespace IdentityServer
 		}
 		private static async Task EnsureAdminAsync(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
-			//if ((await userManager.Users
-			//	.Where(x => x.UserName == "bob")
-			//	.SingleOrDefaultAsync()) 
-			//	!= null) 
-			//return;
-			//Stopwatch mywatch = Stopwatch.StartNew();
-
-			var baseUser = AdminUsers.Users.First();
-
-		    // var identityContext = FindGenericBaseType(typeof(ApplicationDbContext), typeof(IdentityDbContext<,,,,,,,>));
-			//Type of store = typeof(UserStore<,,,,,,,,>).MakeGenericType(typeof(ApplicationUser), typeof(IdentityRole), typeof(ApplicationDbContext),
-			//	identityContext.GenericTypeArguments[2],
-			//	identityContext.GenericTypeArguments[3],
-			//	identityContext.GenericTypeArguments[4],
-			//	identityContext.GenericTypeArguments[5],
-			//	identityContext.GenericTypeArguments[7],
-			//	identityContext.GenericTypeArguments[6]);
-
-			dynamic store = services.GetRequiredService<IUserStore<ApplicationUser>>();
-			try
+			if ((await userManager.GetUsersInRoleAsync(Constants.Admin)).Any())
+				return;
+			
+			try//add admins
 			{
-				store.AutoSaveChanges = false;
-				for (int i = 0; i < 200; i++)
+				userManager.SetAutoChangeParam<ApplicationUser>(false);
+				var baseUser = AdminUsers.Users.First();
+				for (int i = 1; i < 10; i++)
 				{
 					string s = JsonSerializer.Serialize(baseUser);
 					var iu = JsonSerializer.Deserialize<ApplicationUser>(s);
@@ -180,8 +165,6 @@ namespace IdentityServer
 					iu.Id = Guid.NewGuid().ToString();
 					AdminUsers.Users.Add(iu);
 				}
-
-				Stopwatch mywatch = Stopwatch.StartNew();
 				foreach (var user in AdminUsers.Users)
 				{
 					await userManager.CreateAsync(user, Constants.pwd);
@@ -192,14 +175,6 @@ namespace IdentityServer
 					await userManager.AddToRoleAsync(user, Constants.Admin);
 				}
 				await services.GetRequiredService<ApplicationDbContext>().SaveChangesAsync();
-				//foreach (var user in AdminUsers.Users)
-				//{
-				//	await userManager.CreateAsync(user, Constants.pwd);
-				//	await userManager.AddToRoleAsync(user, Constants.Admin);
-				//}
-				mywatch.Stop();
-				Log.Information($"First cost {mywatch}");
-				//await DelAdmin(userManager);
 			}
 			catch (Exception ex)
 			{
@@ -207,48 +182,22 @@ namespace IdentityServer
 			}
 			finally
 			{
-				//var listOfTasks = new List<Task>();
-				//foreach (var user in userManager.Users.ToList())
-				//{					
-				//	listOfTasks.Add(userManager.DeleteAsync(user));
-				//}
-				//await Task.WhenAll(listOfTasks);
-				store.AutoSaveChanges = true;
-				foreach (var user in userManager.Users.ToList())
-				{
-					await userManager.DeleteAsync(user);
-				}
+				//await DelAll(userManager, services);
 			}
 		}
-		private static async Task DelAdmin(UserManager<ApplicationUser> userManager)
+		private static async Task DelAll(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
-			var Admins = await userManager.GetUsersInRoleAsync(Constants.Admin);
-			var listOfTasks = new List<Task>();
-			foreach (var user in Admins)
+			foreach (var user in userManager.Users.ToList())
 			{
-				listOfTasks.Add(userManager.DeleteAsync(user));
+				await userManager.DeleteAsync(user);
 			}
-			await Task.WhenAll(listOfTasks);
+			await services.GetRequiredService<ApplicationDbContext>().SaveChangesAsync();
+			userManager.SetAutoChangeParam<ApplicationUser>(true);
 		}
 		private static class Constants
 		{
 			public const string Admin = "Administrator";
 			public const string pwd = "123";
 		}
-		private static Type? FindGenericBaseType(Type currentType, Type genericBaseType)
-		{
-			Type? type = currentType;
-			while (type != null)
-			{
-				var genericType = type.IsGenericType ? type.GetGenericTypeDefinition() : null;
-				if (genericType != null && genericType == genericBaseType)
-				{
-					return type;
-				}
-				type = type.BaseType;
-			}
-			return null;
-		}
-
 	}
 }

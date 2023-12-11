@@ -77,3 +77,4 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\Ids4Test1\obj\Debug\net8.0\refint
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\Ids4Test1\obj\Debug\net8.0\Ids4Test1.pdb
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\Ids4Test1\obj\Debug\net8.0\Ids4Test1.genruntimeconfig.cache
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\Ids4Test1\obj\Debug\net8.0\ref\Ids4Test1.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\Ids4Test1\obj\Debug\net8.0\Ids4Test1.sourcelink.json

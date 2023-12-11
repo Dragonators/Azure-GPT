@@ -1,5 +1,3 @@
-C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\appsettings.json
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\WebClient.staticwebassets.runtime.json
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\WebClient.exe
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\WebClient.deps.json
@@ -40,3 +38,6 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\refint
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\WebClient.pdb
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\WebClient.genruntimeconfig.cache
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\ref\WebClient.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\WebClient.sourcelink.json
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Pages\appsettings.Development.json
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Pages\appsettings.json

@@ -8,17 +8,16 @@ namespace IdentityServer
 {
 	internal static class HostingExtensions
 	{
+		public static SqlConnectionStringBuilder Sqlbuilder { get; set; }
 		public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
 		{
 			var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
 
-			var Sqlbuilder = new SqlConnectionStringBuilder();
-			Sqlbuilder.DataSource = @"sha-xhji-d1\SQLEXPRESS";
-			Sqlbuilder.IntegratedSecurity = true;
-			Sqlbuilder.InitialCatalog = "IdentityServer";
-			Sqlbuilder.TrustServerCertificate = true;//?
+
 
 			builder.Services.AddRazorPages();//VIEW
+			builder.Services.AddControllers();
+			builder.Services.AddEndpointsApiExplorer();
 
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Sqlbuilder.ConnectionString));
@@ -37,13 +36,6 @@ namespace IdentityServer
 					// https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
 					options.EmitStaticAudienceClaim = true;
 				})
-				/*
-				.AddInMemoryApiScopes(Config.ApiScopes)
-				.AddInMemoryClients(Config.Clients)
-				.AddTestUsers(TestUsers.Users)
-				.AddInMemoryApiResources(Config.ApiResources)
-				.AddInMemoryIdentityResources(Config.IdentityResources);
-				*/
 				.AddConfigurationStore(opt =>
 				{
 					opt.ConfigureDbContext = d => d.UseSqlServer(Sqlbuilder.ConnectionString,
@@ -73,11 +65,19 @@ namespace IdentityServer
 
 			app.UseIdentityServer();
 
-
+			app.UseHttpsRedirection();
 			app.UseAuthorization();
 			app.MapRazorPages().RequireAuthorization();//VIEW
 
 			return app;
+		}
+		static HostingExtensions()
+		{
+			Sqlbuilder = new SqlConnectionStringBuilder();
+			Sqlbuilder.DataSource = @"sha-xhji-d1\SQLEXPRESS";
+			Sqlbuilder.IntegratedSecurity = true;
+			Sqlbuilder.InitialCatalog = "IdentityServer";
+			Sqlbuilder.TrustServerCertificate = true;//?
 		}
 	}
 }
