@@ -16,7 +16,7 @@ namespace IdentityServer
 		{
             new ApplicationUser
 			{
-			    Address=JsonSerializer.Serialize(new
+			    Address=JsonSerializer.Serialize(new Address_
 		        {
 			        street_address = "One Hacker Way",
 			        locality = "Heidelberg",

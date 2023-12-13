@@ -1,0 +1,95 @@
+﻿@page
+@model IdentityServer.Pages.Account.Admin.IndexModel
+@using System.Text.Json;
+@namespace IdentityServer.Model
+@if (Model.User.Users.Any() == false)
+{
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="alert alert-info">
+                还没有任何注册用户
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    int index = 0;
+    foreach (var user in Model.User.Users)
+    {
+        <!-- 创建一个包含导航栏和内容区域的结构 -->
+        <div class="card m-3">
+            <div class="card-header">
+                <!-- 导航栏 -->
+                <ul class="nav nav-tabs card-header-tabs">
+                    <!-- 第一个导航项和内容项添加.active类 -->
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#tab1-@index.ToString()" data-toggle="tab">基本信息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab2-@index.ToString()" data-toggle="tab">详细信息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tab3-@index.ToString()" data-toggle="tab">编辑信息</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- 内容区域 -->
+            <div class="card-body tab-content">
+                <!-- 为内容区域添加.fade类，第一个内容项添加.in类 -->
+                <div class="tab-pane active" id="tab1-@index.ToString()">
+                    <div class="row">
+                        <div class="col-sm-8 card-title">
+                            <strong>用户名：@user.UserName</strong>
+                            <li>姓名：@user.Name</li>
+                            <li>电邮：@user.Email</li>
+                        </div>
+                        <div class="col-sm-2">
+                            <form asp-page-handler="delete" method="post">
+                                <input type="hidden" name="id" value="@user.Id">
+                                <button class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="tab2-@index.ToString()">
+                    <h5 class="card-title">详细信息</h5>
+                    <ul>
+                        @foreach (var property in user.GetType().GetProperties())
+                        {
+                            string propertyName = property.Name;
+                            if (property.Name == "NormalizedUserName"|| 
+                                property.Name == "NormalizedEmail"|| 
+                                property.Name == "SecurityStamp"||
+                                property.Name == "ConcurrencyStamp" ||
+                                property.Name == "SecurityStamp"||
+                                property.Name == "LockoutEnd")
+                            continue;
+                            object propertyValue = property.GetValue(user);
+                            if (propertyValue == null) continue;
+                            if (property.Name == "Address")
+                            {
+                                Address_ address_ = JsonSerializer.Deserialize<Address_>(property.GetValue(user) as string);
+                                <li>@propertyName:
+                                    <ul>
+                                        <li>street_address:@address_.street_address</li>
+                                        <li>locality:@address_.locality</li>
+                                        <li>postal_code:@address_.postal_code</li>
+                                        <li>country:@address_.country</li>
+                                    </ul>
+                                </li>
+                                continue;
+                            }
+                            <li>@propertyName:@propertyValue</li>
+                        }
+                    </ul>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+                <div class="tab-pane fade" id="tab3-@index.ToString()">
+                    <p>这是Tab 3的内容。</p>
+                </div>
+            </div>
+        </div>
+        index++;
+    }
+}

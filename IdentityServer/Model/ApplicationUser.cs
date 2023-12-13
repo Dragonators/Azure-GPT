@@ -16,4 +16,12 @@ namespace IdentityServer.Model
 		public DateTime? Birth { get; set; }
 		public bool tdIsDelete { get; set; }
 	}
+	public class Address_
+	{
+		public string street_address { get; set; }
+        public string locality { get; set; }
+		public int postal_code { get; set; }
+		public string country { get; set; }
+
+    }
 }

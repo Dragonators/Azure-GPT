@@ -16,8 +16,6 @@ namespace IdentityServer
 
 
 			builder.Services.AddRazorPages();//VIEW
-			builder.Services.AddControllers();
-			builder.Services.AddEndpointsApiExplorer();
 
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Sqlbuilder.ConnectionString));
@@ -48,7 +46,6 @@ namespace IdentityServer
 					opt.EnableTokenCleanup = true;
 				})
 				.AddAspNetIdentity<ApplicationUser>();
-
 			return builder.Build();
 		}
 

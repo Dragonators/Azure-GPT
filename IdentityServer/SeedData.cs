@@ -144,12 +144,19 @@ namespace IdentityServer
 		{
 			var alreadyExists = await roleManager
 				.RoleExistsAsync(Constants.Admin);
-			if (alreadyExists) return;
-
-			await roleManager.CreateAsync(new IdentityRole(Constants.Admin));
+            if (!alreadyExists) await roleManager.CreateAsync(new IdentityRole(Constants.Admin));
+            var alreadyExists_ = await roleManager
+                .RoleExistsAsync(Constants.User);
+            if (!alreadyExists_) await roleManager.CreateAsync(new IdentityRole(Constants.User));
 		}
 		private static async Task EnsureAdminAsync(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
+			//var mu = await userManager.FindByNameAsync("bob");
+			//var result=await userManager.RemoveFromRolesAsync(mu, await userManager.GetRolesAsync(mu));
+			//Log.Information(result.ToString());
+			//result = await userManager.AddToRoleAsync(mu, Constants.User);
+			//Log.Information(result.ToString());
+
 			if ((await userManager.GetUsersInRoleAsync(Constants.Admin)).Any())
 				return;
 			
@@ -182,8 +189,9 @@ namespace IdentityServer
 			}
 			finally
 			{
-				//await DelAll(userManager, services);
-			}
+                //await DelAll(userManager, services);
+                userManager.SetAutoChangeParam<ApplicationUser>(true);
+            }
 		}
 		private static async Task DelAll(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
@@ -197,7 +205,8 @@ namespace IdentityServer
 		private static class Constants
 		{
 			public const string Admin = "Administrator";
-			public const string pwd = "123";
+            public const string User = "BasicUser";
+            public const string pwd = "123";
 		}
 	}
 }
