@@ -88,7 +88,7 @@ public class Index : PageModel
             }
         }
 
-        if (ModelState.IsValid)
+	    if (ModelState.IsValid)
         {
             var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberLogin, lockoutOnFailure: true);
             if (result.Succeeded)

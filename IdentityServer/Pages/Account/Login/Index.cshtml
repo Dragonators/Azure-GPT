@@ -1,4 +1,4 @@
-@page
+﻿@page
 @model IdentityServerHost.Pages.Login.Index
 
 <div class="login-page">
@@ -51,7 +51,24 @@
                 </div>
             </div>
         }
-
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>注册新用户</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-inline">
+                        <li class="list-inline-item">
+                            <a class="btn btn-success"
+                               asp-page="/Account/Register/Index"
+                               asp-route-returnUrl="@Model.Input.ReturnUrl">
+                               注册
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         @if (Model.View.VisibleExternalProviders.Any())
         {
             <div class="col-sm-6">

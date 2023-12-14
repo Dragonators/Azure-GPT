@@ -157,7 +157,7 @@ namespace IdentityServer
 			//result = await userManager.AddToRoleAsync(mu, Constants.User);
 			//Log.Information(result.ToString());
 
-			if ((await userManager.GetUsersInRoleAsync(Constants.Admin)).Any())
+            if ((await userManager.GetUsersInRoleAsync(Constants.Admin)).Any())
 				return;
 			
 			try//add admins

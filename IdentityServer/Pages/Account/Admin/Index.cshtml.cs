@@ -8,13 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Security.Claims;
 
-namespace IdentityServer.Pages.Account.Admin
+namespace IdentityServerHost.Pages.Admin
 {
 	[Authorize(Roles = "Administrator")]
 	public class IndexModel : PageModel
     {
 		public string content { get; private set; }
-		public UserModel User { get; set; }
+		public UserModel AllUser { get; set; }
 		public UserManager<ApplicationUser> _userManager { get; set; }
 		public IndexModel(UserManager<ApplicationUser> userManager)
 		{
@@ -23,11 +23,12 @@ namespace IdentityServer.Pages.Account.Admin
 
 		public async Task OnGet()
         {
-			User = new UserModel
-			{
-				Users = await _userManager.Users.Where(d => !d.tdIsDelete).OrderBy(d => d.UserName).ToListAsync()
-			};
+            AllUser = new UserModel
+            {
+                Users = await _userManager.Users.Where(d => !d.tdIsDelete).OrderBy(d => d.UserName).ToListAsync(),
 
+                userManager = _userManager
+            };
 			//content =HttpContext.User.FindFirstValue(JwtClaimTypes.Role);		
         }
 		public async Task<IActionResult> OnPostDelete(string id)

@@ -1,8 +1,8 @@
 ﻿@page
-@model IdentityServer.Pages.Account.Admin.IndexModel
+@model IdentityServerHost.Pages.Admin.IndexModel
 @using System.Text.Json;
 @namespace IdentityServer.Model
-@if (Model.User.Users.Any() == false)
+@if (Model.AllUser.Users.Any() == false)
 {
     <div class="row">
         <div class="col-sm-8">
@@ -15,7 +15,7 @@
 else
 {
     int index = 0;
-    foreach (var user in Model.User.Users)
+    foreach (var user in Model.AllUser.Users)
     {
         <!-- 创建一个包含导航栏和内容区域的结构 -->
         <div class="card m-3">
@@ -54,6 +54,14 @@ else
                 </div>
                 <div class="tab-pane fade" id="tab2-@index.ToString()">
                     <h5 class="card-title">详细信息</h5>
+                    @{
+                        string text="角色：";
+                        foreach (var role in await Model._userManager.GetRolesAsync(user))
+                        {
+                            text += role + " ";
+                        }
+                    }
+                    <h6 class="card-subtitle mb-2 text-muted text-success">@text</h6>
                     <ul>
                         @foreach (var property in user.GetType().GetProperties())
                         {
@@ -83,10 +91,10 @@ else
                             <li>@propertyName:@propertyValue</li>
                         }
                     </ul>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
                 <div class="tab-pane fade" id="tab3-@index.ToString()">
                     <p>这是Tab 3的内容。</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
             </div>
         </div>
