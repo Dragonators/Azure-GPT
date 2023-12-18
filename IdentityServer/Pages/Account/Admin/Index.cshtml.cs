@@ -1,4 +1,4 @@
-using IdentityModel;
+﻿using IdentityModel;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -16,6 +16,8 @@ namespace IdentityServerHost.Pages.Admin
 		public string content { get; private set; }
 		public UserModel AllUser { get; set; }
 		public UserManager<ApplicationUser> _userManager { get; set; }
+		[BindProperty]
+		public CreateInputModel Input { get; set; }
 		public IndexModel(UserManager<ApplicationUser> userManager)
 		{
 			_userManager = userManager;
@@ -38,12 +40,17 @@ namespace IdentityServerHost.Pages.Admin
 			await _userManager.DeleteAsync(user);
 			return RedirectToPage("/Account/Admin/Index");
         }
-        public async Task<IActionResult> OnPostEdit(ApplicationUser user)
+        public async Task<IActionResult> OnPostUpdate()
         {
-			await _userManager.UpdateAsync(user);
-            return RedirectToPage("/Account/Admin/Index");
-        }
-        public async Task<IActionResult> OnPostCreate(ApplicationUser user,string pwd,string roll)
+			//return RedirectToPage("/Account/Admin/Index");
+			if (!ModelState.IsValid)
+			{
+				// 如果模型状态不合法，返回错误信息
+				return BadRequest(ModelState);
+			}
+			return RedirectToPage("/Account/Admin/Index");
+		}
+		public async Task<IActionResult> OnPostCreate(ApplicationUser user,string pwd,string roll)
         {
             var result = await _userManager.CreateAsync(user,pwd);
             result = await _userManager.AddToRoleAsync(user, roll);

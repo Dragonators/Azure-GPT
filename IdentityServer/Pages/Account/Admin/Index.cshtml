@@ -4,100 +4,238 @@
 @namespace IdentityServer.Model
 @if (Model.AllUser.Users.Any() == false)
 {
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="alert alert-info">
-                还没有任何注册用户
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="alert alert-info">
+				还没有任何注册用户
+			</div>
+		</div>
+	</div>
 }
 else
 {
-    int index = 0;
-    foreach (var user in Model.AllUser.Users)
-    {
-        <!-- 创建一个包含导航栏和内容区域的结构 -->
-        <div class="card m-3">
-            <div class="card-header">
-                <!-- 导航栏 -->
-                <ul class="nav nav-tabs card-header-tabs">
-                    <!-- 第一个导航项和内容项添加.active类 -->
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#tab1-@index.ToString()" data-toggle="tab">基本信息</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tab2-@index.ToString()" data-toggle="tab">详细信息</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#tab3-@index.ToString()" data-toggle="tab">编辑信息</a>
-                    </li>
-                </ul>
-            </div>
-            <!-- 内容区域 -->
-            <div class="card-body tab-content">
-                <!-- 为内容区域添加.fade类，第一个内容项添加.in类 -->
-                <div class="tab-pane active" id="tab1-@index.ToString()">
-                    <div class="row">
-                        <div class="col-sm-8 card-title">
-                            <strong>用户名：@user.UserName</strong>
-                            <li>姓名：@user.Name</li>
-                            <li>电邮：@user.Email</li>
-                        </div>
-                        <div class="col-sm-2">
-                            <form asp-page-handler="delete" method="post">
-                                <input type="hidden" name="id" value="@user.Id">
-                                <button class="btn btn-danger">Delete</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="tab2-@index.ToString()">
-                    <h5 class="card-title">详细信息</h5>
-                    @{
-                        string text="角色：";
-                        foreach (var role in await Model._userManager.GetRolesAsync(user))
-                        {
-                            text += role + " ";
-                        }
-                    }
-                    <h6 class="card-subtitle mb-2 text-muted text-success">@text</h6>
-                    <ul>
-                        @foreach (var property in user.GetType().GetProperties())
-                        {
-                            string propertyName = property.Name;
-                            if (property.Name == "NormalizedUserName"|| 
-                                property.Name == "NormalizedEmail"|| 
-                                property.Name == "SecurityStamp"||
-                                property.Name == "ConcurrencyStamp" ||
-                                property.Name == "SecurityStamp"||
-                                property.Name == "LockoutEnd")
-                            continue;
-                            object propertyValue = property.GetValue(user);
-                            if (propertyValue == null) continue;
-                            if (property.Name == "Address")
-                            {
-                                Address_ address_ = JsonSerializer.Deserialize<Address_>(property.GetValue(user) as string);
-                                <li>@propertyName:
-                                    <ul>
-                                        <li>street_address:@address_.street_address</li>
-                                        <li>locality:@address_.locality</li>
-                                        <li>postal_code:@address_.postal_code</li>
-                                        <li>country:@address_.country</li>
-                                    </ul>
-                                </li>
-                                continue;
-                            }
-                            <li>@propertyName:@propertyValue</li>
-                        }
-                    </ul>
-                </div>
-                <div class="tab-pane fade" id="tab3-@index.ToString()">
-                    <p>这是Tab 3的内容。</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        index++;
-    }
+	int index = 0;
+	foreach (var user in Model.AllUser.Users)
+	{
+		<!-- 创建一个包含导航栏和内容区域的结构 -->
+		<div class="card m-3">
+			<div class="card-header">
+				<!-- 导航栏 -->
+				<ul class="nav nav-tabs card-header-tabs">
+					<!-- 第一个导航项和内容项添加.active类 -->
+					<li class="nav-item">
+						<a class="nav-link active" href="#tab1-@index.ToString()" data-toggle="tab">基本信息</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab2-@index.ToString()" data-toggle="tab">详细信息</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab3-@index.ToString()" data-toggle="tab">编辑信息</a>
+					</li>
+				</ul>
+			</div>
+			<!-- 内容区域 -->
+			<div class="card-body tab-content">
+				<!-- 为内容区域添加.fade类，第一个内容项添加.in类 -->
+				<div class="tab-pane active" id="tab1-@index.ToString()">
+					<div class="row">
+						<div class="col-sm-8 card-title">
+							<strong>用户名：@user.UserName</strong>
+							<li>姓名：@user.Name</li>
+							<li>电邮：@user.Email</li>
+						</div>
+						<div class="col-sm-2">
+							<form asp-page-handler="delete" method="post">
+								<input type="hidden" name="id" value="@user.Id">
+								<button class="btn btn-danger">Delete</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="tab2-@index.ToString()">
+					<h5 class="card-title">详细信息</h5>
+					@{
+						string text = "角色：";
+						foreach (var role in await Model._userManager.GetRolesAsync(user))
+						{
+							text += role + " ";
+						}
+					}
+					<h6 class="card-subtitle mb-2 text-muted text-success">@text</h6>
+					<ul>
+						@foreach (var property in user.GetType().GetProperties())
+						{
+							string propertyName = property.Name;
+							if (property.Name == "NormalizedUserName" ||
+							property.Name == "NormalizedEmail" ||
+							property.Name == "SecurityStamp" ||
+							property.Name == "ConcurrencyStamp" ||
+							property.Name == "SecurityStamp" ||
+							property.Name == "LockoutEnd")
+								continue;
+							object propertyValue = property.GetValue(user);
+							if (propertyValue == null) continue;
+							if (property.Name == "Address")
+							{
+								Address_ address_ = JsonSerializer.Deserialize<Address_>(property.GetValue(user) as string);
+								<li>
+									@propertyName:
+									<ul>
+										<li>street_address:@address_.street_address</li>
+										<li>locality:@address_.locality</li>
+										<li>postal_code:@address_.postal_code</li>
+										<li>country:@address_.country</li>
+									</ul>
+								</li>
+								continue;
+							}
+							<li>@propertyName:@propertyValue</li>
+						}
+					</ul>
+				</div>
+				<div class="tab-pane fade" id="tab3-@index.ToString()">
+					<form asp-page="/Account/Admin/Index" asp-page-handler="update" method="post" id="UpdateForm" class="row g-3 needs-validation" novalidate>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltip01" class="form-label">Given name</label>
+							<!-- 使用正则表达式客户端验证名字 -->
+							<input type="text" class="form-control" asp-for="Input.GivenName" id="validationTooltip01" value=@user.GivenName required pattern="^[\u4e00-\u9fa5[a-zA-Z]]+$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a First name.
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltip02" class="form-label">Family name</label>
+							<!-- 使用正则表达式客户端验证名字 -->
+							<input type="text" class="form-control" asp-for="Input.FamilyName" id="validationTooltip02" value=@user.FamilyName required pattern="^[\u4e00-\u9fa5[a-zA-Z]]+$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a Last name.
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltipUsername" class="form-label">Username</label>
+							<div class="input-group">
+								<!-- 使用正则表达式客户端验证用户名 -->
+								<input type="text" class="form-control" asp-for="Input.Username" id="name" value=@user.UserName required pattern="^[\w\-]{2,16}$">
+								<div class="valid-feedback order-1">
+									Looks good!
+								</div>
+								<div class="invalid-feedback order-1">
+									Please provide a Username.
+								</div>
+								<div class="input-group-append">
+									<span class="input-group-text">@@</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltipweb" class="form-label">Website</label>
+							<!-- 使用正则表达式客户端验证个人主页 -->
+							<input type="text" class="form-control" asp-for="Input.Website" id="validationTooltipweb" value="" pattern="^\w+[^\s]+(\.[^\s]+){1,}$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a correct url.
+							</div>
+						</div>
+						<div class="col-md-3">
+							<label for="validationTooltipsex" class="form-label">Sex</label>
+							<select class="form-control" asp-for="Input.Sex" id="validationTooltipsex">
+								<option selected disabled>请选择性别</option>
+								<option value="0">Male</option>
+								<option value="1">Female</option>
+							</select>
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltipemail" class="form-label">Email</label>
+							<!-- 使用正则表达式客户端验证邮箱地址 -->
+							<input type="text" class="form-control" asp-for="Input.Email" id="validationTooltipemail" value="" pattern="^[^@@\s]+@@[^@@\s]+\.[^@@\s]+$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+						</div>
+						<div class="col-md-3 position-relative">
+							<label for="validationTooltipBirthday" class="form-label">Birthday</label>
+							<!-- 只能选择到当天为止的日期 -->
+							<input type="date" class="form-control" asp-for="Input.Birth" id="validationTooltipBirthday" max=@DateTime.Today.ToString("yyyy-MM-dd")>
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please select a birthday.
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltip03" class="form-label">Country</label>
+							<!-- 只能填写中文与英文 -->
+							<input type="text" class="form-control" asp-for="Input.Address.country" id="validationTooltip03" pattern="^[\u4e00-\u9fa5[a-zA-Z]]+$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a valid city.
+							</div>
+						</div>
+						<div class="col-md-4 position-relative">
+							<label for="validationTooltip04" class="form-label">Locality</label>
+							<!-- 只能填写中文与英文 -->
+							<input type="text" class="form-control" asp-for="Input.Address.locality" id="validationTooltip04" pattern="^[\u4e00-\u9fa5[a-zA-Z]]+$">
+							<div class="invalid-feedback">
+								Please provide a valid city.
+							</div>
+						</div>
+						<div class="col-md-3 position-relative">
+							<label for="validationTooltip05" class="form-label">Street address</label>
+							<!-- 只能填写中文与英文与数字和-_ -->
+							<input type="text" class="form-control" asp-for="Input.Address.street_address" id="validationTooltip05" pattern="^[\u4e00-\u9fa5\w\-]+$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a valid city.
+							</div>
+						</div>
+						<div class="col-md-3 position-relative">
+							<label for="validationTooltip06" class="form-label">Zip code</label>
+							<!-- 只能填写正确的邮编格式 -->
+							<input type="text" class="form-control" asp-for="Input.Address.postal_code" id="validationTooltip06" pattern="^\d+(-\d+)?$">
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please provide a valid zip.
+							</div>
+							<p></p>
+						</div>
+						<div class="col-12">
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" value="" id="invalidCheck3" aria-describedby="invalidCheck3Feedback" required>
+								<label class="form-check-label" for="invalidCheck3">
+									Agree to terms and conditions
+								</label>
+								<div id="invalidCheck3Feedback" class="invalid-feedback">
+									You must agree before submitting.
+								</div>
+							</div>
+							<p></p>
+						</div>
+						<div class="col-12">
+							<button class="btn btn-primary" type="submit">Submit Changes</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		index++;
+	}
 }
+<script src="~/js/Validate.js"></script>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "OxZa0kpzrHVGYKYdzPnKmqp21nnTVuZz10lLu0tWd3o=",
+  "Hash": "ss4jLOd9CbLyYz+//6u8oIq+oU1ku3J5Z+KYWgaDVd0=",
   "Source": "IdentityServer",
   "BasePath": "_content/IdentityServer",
   "Mode": "Default",
@@ -148,6 +148,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\signout-redirect.js"
+    },
+    {
+      "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\wwwroot\\js\\Validate.js",
+      "SourceId": "IdentityServer",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\wwwroot\\",
+      "BasePath": "_content/IdentityServer",
+      "RelativePath": "js/Validate.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Validate.js"
     },
     {
       "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

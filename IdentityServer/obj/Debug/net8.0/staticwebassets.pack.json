@@ -21,6 +21,10 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\wwwroot\\js\\Validate.js",
+      "PackagePath": "staticwebassets\\js\\Validate.js"
+    },
+    {
       "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\wwwroot\\js\\signin-redirect.js",
       "PackagePath": "staticwebassets\\js\\signin-redirect.js"
     },
