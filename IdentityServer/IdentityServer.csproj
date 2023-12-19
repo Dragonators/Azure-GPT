@@ -11,6 +11,8 @@
 
 		<PackageReference Include="Duende.IdentityServer.EntityFramework" Version="6.3.6" />
 
+		<PackageReference Include="Mapster" Version="7.4.0" />
+
 		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0" />
 
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.0">

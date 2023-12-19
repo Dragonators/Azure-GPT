@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "KFtFvcTqvWe6HFDcahFqEo2WfXhcfb+v/mOE8rRU9ijugb01sG4D9Gr6/wV8mv5xkzYtERfni7UBJZQtjsBIUw==",
+  "dgSpecHash": "x9KPs7pQByXJOJ9SyqiblTNvJtZsTuFBxwVLzn1t2VQ1eX+lCFnkzKxQLQ6awuzA96MvpikpeYq1j+bvnQwyFA==",
   "success": true,
   "projectFilePath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\IdentityServer\\IdentityServer.csproj",
   "expectedPackageFiles": [
@@ -14,6 +14,8 @@
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\duende.identityserver.storage\\6.3.6\\duende.identityserver.storage.6.3.6.nupkg.sha512",
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\identitymodel\\6.1.0\\identitymodel.6.1.0.nupkg.sha512",
+    "C:\\Users\\xuanhao.ji\\.nuget\\packages\\mapster\\7.4.0\\mapster.7.4.0.nupkg.sha512",
+    "C:\\Users\\xuanhao.ji\\.nuget\\packages\\mapster.core\\1.2.1\\mapster.core.1.2.1.nupkg.sha512",
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\microsoft.aspnetcore.authentication.openidconnect\\7.0.0\\microsoft.aspnetcore.authentication.openidconnect.7.0.0.nupkg.sha512",
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\8.0.0\\microsoft.aspnetcore.cryptography.internal.8.0.0.nupkg.sha512",
     "C:\\Users\\xuanhao.ji\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\8.0.0\\microsoft.aspnetcore.cryptography.keyderivation.8.0.0.nupkg.sha512",

@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -7,14 +8,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using System.Security.Claims;
+using System.Text;
 
 namespace IdentityServerHost.Pages.Admin
 {
 	[Authorize(Roles = "Administrator")]
 	public class IndexModel : PageModel
     {
-		public string content { get; private set; }
-		public UserModel AllUser { get; set; }
+		//public UserModel AllUser { get; set; }
 		public UserManager<ApplicationUser> _userManager { get; set; }
 		[BindProperty]
 		public CreateInputModel Input { get; set; }
@@ -24,14 +25,7 @@ namespace IdentityServerHost.Pages.Admin
 		}
 
 		public async Task OnGet()
-        {
-            AllUser = new UserModel
-            {
-                Users = await _userManager.Users.Where(d => !d.tdIsDelete).OrderBy(d => d.UserName).ToListAsync(),
-
-                userManager = _userManager
-            };
-			//content =HttpContext.User.FindFirstValue(JwtClaimTypes.Role);		
+        { 
         }
 		public async Task<IActionResult> OnPostDelete(string id)
 		{
@@ -42,13 +36,21 @@ namespace IdentityServerHost.Pages.Admin
         }
         public async Task<IActionResult> OnPostUpdate()
         {
-			//return RedirectToPage("/Account/Admin/Index");
-			if (!ModelState.IsValid)
+			if (ModelState.IsValid)
 			{
-				// 如果模型状态不合法，返回错误信息
-				return BadRequest(ModelState);
+				var user = await _userManager.FindByIdAsync(Input.Id);
+				Config.MapUser(Input, ref user);
+				var result = await _userManager.UpdateAsync(user);
+				if(result.Succeeded)
+				{	
+					return RedirectToPage("/Account/Admin/Index");
+				}
+				else
+				{
+					return Page();
+				}
 			}
-			return RedirectToPage("/Account/Admin/Index");
+			return Page();
 		}
 		public async Task<IActionResult> OnPostCreate(ApplicationUser user,string pwd,string roll)
         {

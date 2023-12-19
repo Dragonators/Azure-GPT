@@ -151,3 +151,5 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\z
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\Duende.IdentityServer.AspNetIdentity.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\obj\Debug\net8.0\IdentityServer.sourcelink.json
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\Mapster.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\Mapster.Core.dll

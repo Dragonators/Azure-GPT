@@ -1,5 +1,9 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityServer.Model;
+using IdentityServerHost.Pages.Admin;
+using Mapster;
+using MapsterMapper;
 
 namespace IdentityServer
 {
@@ -86,5 +90,22 @@ namespace IdentityServer
 					RequireConsent = true //是否需要用户点同意
 				}
 			};
+		public static void MapUser(CreateInputModel input, ref ApplicationUser user)
+		{
+			var config = new TypeAdapterConfig();
+			config.ForType<CreateInputModel, ApplicationUser>()
+				.Map(dest=>dest.UserName,src=>src.Username)
+				.Map(dest=>dest.NickName,src=>src.NickName)
+				.Map(dest=>dest.GivenName,src=>src.GivenName)
+				.Map(dest=>dest.FamilyName,src=>src.FamilyName)
+				.Map(dest=>dest.Sex,src=>src.Sex)
+				.Map(dest=>dest.Website,src=>src.Website)
+				.Map(dest=>dest.Birth,src=>src.Birth)
+				.Map(dest=>dest.Email,src=>src.Email)
+				.IgnoreNonMapped(true)
+				.IgnoreNullValues(true);
+			var mapper = new Mapper(config);
+			mapper.Map(input, user);
+		}
 	}
 }

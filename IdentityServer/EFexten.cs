@@ -1,5 +1,7 @@
-﻿using System.Reflection;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 using IdentityServer.Model;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -35,5 +37,16 @@ namespace IdentityServer
 			.UseSqlServer(HostingExtensions.Sqlbuilder.ConnectionString);
 		}
 	}
+	public class BirthDayAttribute : ValidationAttribute
+	{
+		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+		{
+			if(value==null)
+				return ValidationResult.Success;
+			DateTime? date = Convert.ToDateTime(value);
+			return (date != null && date < DateTime.Now && date> DateTime.ParseExact("1850-01-01", "yyyy-MM-dd", null)) ? ValidationResult.Success : new ValidationResult("生日必须晚于1850/1/1且不能大于当前时间");
+		}
+	}
+
 }
 

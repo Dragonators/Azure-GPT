@@ -62,7 +62,7 @@ namespace IdentityServerHost.Pages.Register
 				var result = await _userManager.CreateAsync(new ApplicationUser
 				{
 					UserName = Input.Username,
-					Name=Input.Name
+					NickName=Input.Name
 				},Input.Password);
 				if (result.Succeeded)
 				{

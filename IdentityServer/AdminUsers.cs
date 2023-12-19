@@ -20,11 +20,11 @@ namespace IdentityServer
 		        {
 			        street_address = "One Hacker Way",
 			        locality = "Heidelberg",
-			        postal_code = 69118,
+			        postal_code = "69118",
 			        country = "Germany"
 		        }),
 				Email="BobSmith@email.com",
-				Name="Bob Smith",
+				NickName="Bob Smith",
 				GivenName="Bob",
 				FamilyName="Smith",
 				UserName="bob"
