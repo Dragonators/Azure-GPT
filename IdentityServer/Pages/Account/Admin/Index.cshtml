@@ -32,6 +32,9 @@ else
 					<li class="nav-item">
 						<a class="nav-link" href="#tab3-@index.ToString()" data-toggle="tab">编辑信息</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab4-@index.ToString()" data-toggle="tab">修改密码</a>
+					</li>
 				</ul>
 			</div>
 			<!-- 内容区域 -->
@@ -78,6 +81,7 @@ else
 							if (property.Name == "Address")
 							{
 								Address_ address_ = JsonSerializer.Deserialize<Address_>(property.GetValue(user) as string);
+								if (address_.country == null && address_.locality == null && address_.postal_code == null && address_.country == null) continue;
 								<li>
 									@propertyName:
 									<ul>
@@ -173,7 +177,7 @@ else
 						</div>
 						<div class="col-md-3">
 							<label for="validationTooltipsex" class="form-label">Sex</label>
-							<select class="form-control" asp-for="Input.Sex" id="validationTooltipsex">
+							<select class="form-control" asp-for="Input.Sex" id="validationTooltipsex-@index.ToString()">
 								<option selected="@(user.Sex is null)" disabled>请选择性别</option>
 								<option selected="@(user.Sex == 0)" value="0">Male</option>
 								<option selected="@(user.Sex == 1)" value="1">Female</option>
@@ -254,6 +258,32 @@ else
 								</label>
 								<div id="invalidCheck3Feedback" class="invalid-feedback">
 									You must confirm before submitting changes.
+								</div>
+							</div>
+							<p></p>
+						</div>
+						<div class="col-12">
+							<button class="btn btn-primary" type="submit">Submit Changes</button>
+						</div>
+					</form>
+				</div>
+				<div class="tab-pane fade" id="tab4-@index.ToString()">
+					<partial name="_ValidationSummary" />
+					<form asp-page="/Account/Admin/Index" asp-page-handler="PwdReset" method="post" id="UpdatePwdForm-@index.ToString()" class="row g-3 needs-validation" novalidate>
+						<input type="hidden" name="id" value=@user.Id />
+						<!-- 以下两项本不需要绑定，但是由于CreateInputModel是Bindproperty，required项必须绑定才能满足ModelState -->
+						<input type="hidden" asp-for="Input.Username" value=@user.UserName />
+						<input type="hidden" asp-for="Input.NickName" value=@user.NickName />
+						<div class="col-md-3 position-relative">
+							<label for="validationTooltipPassword" class="form-label">Password</label>
+							<div class="input-group">
+								<!-- 密码只要有一个及以上的任意字符就行 只需require-->
+								<input type="text" class="form-control" name="new_pwd" id="pwd-@index.ToString()" placeholder="new Password" required>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+								<div class="invalid-feedback">
+									Please provide a correct pwd.
 								</div>
 							</div>
 							<p></p>

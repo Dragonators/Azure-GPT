@@ -1,4 +1,4 @@
-using Duende.IdentityServer.Events;
+﻿using Duende.IdentityServer.Events;
 using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
 using Duende.IdentityServer.Stores;
@@ -96,7 +96,7 @@ namespace IdentityServerHost.Pages.Register
 					//
 					//
 				}
-				ModelState.AddModelError(string.Empty, "Invalid username or password or Name");
+				ModelState.AddModelError(string.Empty, "该用户名已经存在！");
 			}
 			await BuildModelAsync(Input.ReturnUrl);
 			return Page();

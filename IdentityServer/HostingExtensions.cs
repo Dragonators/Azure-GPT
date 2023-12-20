@@ -25,6 +25,7 @@ namespace IdentityServer
 				opt.Password.RequiredLength = 1;
 				opt.Password.RequireUppercase = false;
 				opt.Password.RequireLowercase = false;
+				opt.Password.RequireDigit = false;
 			})
 			.AddEntityFrameworkStores<ApplicationDbContext>()
 			.AddDefaultTokenProviders();

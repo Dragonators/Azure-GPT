@@ -4,6 +4,7 @@ using IdentityServer.Model;
 using IdentityServerHost.Pages.Admin;
 using Mapster;
 using MapsterMapper;
+using System.Text.Json;
 
 namespace IdentityServer
 {
@@ -102,6 +103,7 @@ namespace IdentityServer
 				.Map(dest=>dest.Website,src=>src.Website)
 				.Map(dest=>dest.Birth,src=>src.Birth)
 				.Map(dest=>dest.Email,src=>src.Email)
+				.Map(dest => dest.Address, src => JsonSerializer.Serialize(src.Address,new JsonSerializerOptions()))
 				.IgnoreNonMapped(true)
 				.IgnoreNullValues(true);
 			var mapper = new Mapper(config);

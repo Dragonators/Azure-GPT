@@ -4,14 +4,18 @@ using IdentityServer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 
 namespace IdentityServerHost.Pages.Admin
 {
+	[IgnoreAntiforgeryToken]//WHY
 	[Authorize(Roles = "Administrator")]
 	public class IndexModel : PageModel
     {
@@ -24,7 +28,7 @@ namespace IdentityServerHost.Pages.Admin
 			_userManager = userManager;
 		}
 
-		public async Task OnGet()
+		public void OnGet()
         { 
         }
 		public async Task<IActionResult> OnPostDelete(string id)
@@ -47,9 +51,15 @@ namespace IdentityServerHost.Pages.Admin
 				}
 				else
 				{
+					result.Errors.ToList().ForEach(e => ModelState.AddModelError(e.Code, e.Description));
 					return Page();
 				}
 			}
+			return Page();
+		}
+		public async Task<IActionResult> OnPostPwdReset(string id,[Required]string new_pwd)
+		{
+			Log.Information("heelo "+id+" "+new_pwd);			
 			return Page();
 		}
 		public async Task<IActionResult> OnPostCreate(ApplicationUser user,string pwd,string roll)
@@ -58,5 +68,14 @@ namespace IdentityServerHost.Pages.Admin
             result = await _userManager.AddToRoleAsync(user, roll);
             return RedirectToPage("/Account/Admin/Index");
         }
+		public async Task<IActionResult> OnPostValidUsername([FromBody]Jdata data)
+		{
+			return new JsonResult((await _userManager.FindByNameAsync(data.username)) is null|| (await _userManager.FindByNameAsync(data.username)).Id== data.id);
+		}
     }
+	public class Jdata
+	{
+		public string id { get; set; }
+		public string username { get; set; }
+	}
 }
