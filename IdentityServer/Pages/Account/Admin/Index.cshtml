@@ -35,6 +35,9 @@ else
 					<li class="nav-item">
 						<a class="nav-link" href="#tab4-@index.ToString()" data-toggle="tab">修改密码</a>
 					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#tab5-@index.ToString()" data-toggle="tab">更改权限</a>
+					</li>
 				</ul>
 			</div>
 			<!-- 内容区域 -->
@@ -270,28 +273,62 @@ else
 				<div class="tab-pane fade" id="tab4-@index.ToString()">
 					<partial name="_ValidationSummary" />
 					<form asp-page="/Account/Admin/Index" asp-page-handler="PwdReset" method="post" id="UpdatePwdForm-@index.ToString()" class="row g-3 needs-validation" novalidate>
-						<input type="hidden" name="id" value=@user.Id />
-						<!-- 以下两项本不需要绑定，但是由于CreateInputModel是Bindproperty，required项必须绑定才能满足ModelState -->
-						<input type="hidden" asp-for="Input.Username" value=@user.UserName />
-						<input type="hidden" asp-for="Input.NickName" value=@user.NickName />
-						<div class="col-md-3 position-relative">
-							<label for="validationTooltipPassword" class="form-label">Password</label>
-							<div class="input-group">
+						<input type="hidden" name="id_" value=@user.Id />
+						<div class="col-md-12 position-relative">
+							<label for="validationTooltipPassword1" class="form-label">old Password</label>
 								<!-- 密码只要有一个及以上的任意字符就行 只需require-->
-								<input type="text" class="form-control" name="new_pwd" id="pwd-@index.ToString()" placeholder="new Password" required>
+								<input type="text" class="form-control col-md-3 position-relative" name="old_pwd" id="oldpwd-@index.ToString()" placeholder="old Password" required>
 								<div class="valid-feedback">
 									Looks good!
 								</div>
 								<div class="invalid-feedback">
 									Please provide a correct pwd.
 								</div>
-							</div>
+						</div>
+						<div class="col-md-12 position-relative">
+							<label for="validationTooltipPassword2" class="form-label">new Password</label>
+								<!-- 密码只要有一个及以上的任意字符就行 只需require-->
+							<input type="text" class="form-control col-md-3 position-relative" name="new_pwd" id="newpwd-@index.ToString()" placeholder="new Password" required>
+								<div class="valid-feedback">
+									Looks good!
+								</div>
+								<div class="invalid-feedback">
+									Please provide a correct pwd.
+								</div>
 							<p></p>
 						</div>
 						<div class="col-12">
 							<button class="btn btn-primary" type="submit">Submit Changes</button>
 						</div>
 					</form>
+				</div>
+				<div class="tab-pane fade" id="tab5-@index.ToString()">
+					<partial name="_ValidationSummary" />
+					<form asp-page="/Account/Admin/Index" asp-page-handler="RoleUpdate" method="post" id="UpdateRoleForm-@index.ToString()" class="row g-3 needs-validation" novalidate>
+						<input type="hidden" name="id_" value=@user.Id />
+						<input type="hidden" name="Button" value="" />
+						<div class="col-md-3 position-relative">
+							<label for="validationTooltiprole" class="form-label">Please Select Role</label>
+							<select class="form-control" name="role" id="validationTooltiprole-@index.ToString()" required>
+								<option selected disabled value="">Please select</option>
+								@foreach(var role in Model._roleManager.Roles)
+								{
+									<option value="@(role.Name)">@(role.Name)</option>
+								}
+							</select>
+							<div class="valid-feedback">
+								Looks good!
+							</div>
+							<div class="invalid-feedback">
+								Please select a Role.
+							</div>
+							<p></p>
+						</div>
+					</form>
+					<div class="col-12">
+						<button class="btn btn-success" value="Add">Add Role</button>
+						<button class="btn btn-secondary" value="Remove">Remove Role</button>
+					</div>
 				</div>
 			</div>
 		</div>

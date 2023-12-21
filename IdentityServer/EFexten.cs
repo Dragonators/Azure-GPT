@@ -4,6 +4,7 @@ using IdentityServer.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
@@ -45,6 +46,23 @@ namespace IdentityServer
 				return ValidationResult.Success;
 			DateTime? date = Convert.ToDateTime(value);
 			return (date != null && date < DateTime.Now && date> DateTime.ParseExact("1850-01-01", "yyyy-MM-dd", null)) ? ValidationResult.Success : new ValidationResult("生日必须晚于1850/1/1且不能大于当前时间");
+		}
+	}
+	public static class ModelStateExtensions
+	{
+		/// <summary>
+		///在单一Razor Page中使用不同模型对应不同表单POST时，先调用此方法清空所有字段的错误信息
+		///否则会出现多个模型的错误信息混合在一起的情况
+		///然后再调用TryValidateModel方法验证当前特定模型
+		/// </summary>
+		public static ModelStateDictionary MarkAllFieldsAsSkipped(this ModelStateDictionary modelState)
+		{
+			foreach (var state in modelState.Select(x => x.Value))
+			{
+				state.Errors.Clear();
+				state.ValidationState = ModelValidationState.Skipped;
+			}
+			return modelState;
 		}
 	}
 
