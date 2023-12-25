@@ -12,7 +12,6 @@ namespace IdentityServerHost.Pages.Admin
 	[Authorize(Roles = "Administrator")]
 	public class IndexModel : PageModel
     {
-		//public UserModel AllUser { get; set; }
 		public UserManager<ApplicationUser> _userManager { get; set; }
 		public RoleManager<IdentityRole> _roleManager { get; set; }
 		[BindProperty]
@@ -117,12 +116,6 @@ namespace IdentityServerHost.Pages.Admin
 				return Page();
 			}
 		}
-		//public async Task<IActionResult> OnPostCreate(ApplicationUser user,string pwd,string roll)
-  //      {
-  //          var result = await _userManager.CreateAsync(user,pwd);
-  //          result = await _userManager.AddToRoleAsync(user, roll);
-  //          return RedirectToPage("/Account/Admin/Index");
-  //      }
 		public async Task<IActionResult> OnPostValidUsername([FromBody]Jdata data)
 		{
 			return new JsonResult((await _userManager.FindByNameAsync(data.username)) is null|| (await _userManager.FindByNameAsync(data.username)).Id== data.id);

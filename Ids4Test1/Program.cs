@@ -25,7 +25,7 @@ builder.Services.AddAuthorization(p =>
     {
         //配置鉴定用户的规则，这里表示策略要求用户通过身份认证
         opt.RequireAuthenticatedUser();
-        //鉴定api范围的规则,这里表示策略要求用户具有名为 "scope" 的声明，其值为 "simple_api"
+        //鉴定api范围的规则,这里表示策略要求用户具有名为 "scope" 的声明，其值为 "weather_api"
         opt.RequireClaim("scope", "weather_api");
     });
 });

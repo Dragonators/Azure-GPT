@@ -36,7 +36,14 @@
         }
         else 
         {
-            <a class="btn btn-success me-2" asp-page="/Account/Register/Index">Register</a>
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link text-white" asp-area="" asp-page="/Account/Login/Index">Login</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link text-white" asp-area="" asp-page="/Account/Register/Index">Register</a>
+				</li>
+			</ul>
         }
     </nav>
 </div>

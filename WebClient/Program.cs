@@ -1,5 +1,7 @@
+using IdentityModel;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -33,9 +35,19 @@ builder.Services.AddAuthentication(opt =>
 		opt.Scope.Add("email");
 		opt.Scope.Add("custom_resource");
 		opt.Scope.Add("offline_access");
-        opt.ClaimActions.MapUniqueJsonKey("website", "website");
-        opt.ClaimActions.MapUniqueJsonKey("address", "address");
-        opt.ClaimActions.MapUniqueJsonKey("phone_number", "phone_number");
+        opt.Scope.Add("roles");
+        
+		opt.ClaimActions.MapUniqueJsonKey("website", JwtClaimTypes.WebSite);
+        opt.ClaimActions.MapUniqueJsonKey("Nick Name", JwtClaimTypes.NickName);
+        opt.ClaimActions.MapUniqueJsonKey("UserName", JwtClaimTypes.PreferredUserName);
+        opt.ClaimActions.MapUniqueJsonKey("Name", JwtClaimTypes.Name);
+        opt.ClaimActions.MapUniqueJsonKey("Address", JwtClaimTypes.Address);
+        opt.ClaimActions.MapJsonKey("role", "role");
+        opt.TokenValidationParameters = new TokenValidationParameters
+        {
+            NameClaimType = "name",
+            RoleClaimType = "role"
+        };
 
         opt.GetClaimsFromUserInfoEndpoint = true;
 	});

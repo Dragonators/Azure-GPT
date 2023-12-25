@@ -1,5 +1,6 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
+using IdentityModel;
 using IdentityServer.Model;
 using IdentityServerHost.Pages.Admin;
 using Mapster;
@@ -19,9 +20,14 @@ namespace IdentityServer
 				new IdentityResource(
 					name: "custom_resource",
 					displayName: "Custom Resource",
-					userClaims:new[] {"website", "address", "phone_number" }
-				)
-			};
+					userClaims:new[] {"address", JwtClaimTypes.PreferredUserName }
+				),
+                new IdentityResource(
+                    name: "roles",
+                    displayName: "Roles",
+                    userClaims:new[] {"role" }
+                ),
+            };
 
 		public static IEnumerable<ApiScope> ApiScopes =>
 			new ApiScope[]
@@ -65,6 +71,16 @@ namespace IdentityServer
 					AllowedGrantTypes = new List<string>(){GrantType.ResourceOwnerPassword},
 					AllowedScopes = { "weather_api" }//允许访问的api,可以有多个
 				},
+				new Client()
+				{
+                    ClientId = "Profile_Client",
+                    ClientSecrets = new List<Secret>()
+                    {
+                        new Secret("secret".Sha256())
+                    },
+                    AllowedGrantTypes = new List<string>(){GrantType.ClientCredentials},// 没有交互式用户，使用 clientid/secret 进行身份验证
+					AllowedScopes = { "profile_api" }//客户端允许访问的api,可以有多个
+				},
 				//配置OICD 重定向
 				new Client()
 				{
@@ -86,7 +102,8 @@ namespace IdentityServer
 						IdentityServerConstants.StandardScopes.Profile, //IdentityResources中定义了这两项，在这里也需要声明
 						IdentityServerConstants.StandardScopes.Email,
 						"custom_resource",
-						"weather_api"
+						"weather_api",
+						"roles"
 					},//允许访问的api,可以有多个
 					RequireConsent = true //是否需要用户点同意
 				}

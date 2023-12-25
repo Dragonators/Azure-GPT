@@ -102,7 +102,11 @@ namespace IdentityServer
 		{
 			using (var context = serviceScopeFactory.CreateScope().ServiceProvider.GetRequiredService<ConfigurationDbContext>())
 			{
-				foreach (var identityResource in Config.IdentityResources)
+                context.RemoveRange(context.IdentityResources);
+                context.RemoveRange(context.Clients);
+                context.SaveChanges();
+
+                foreach (var identityResource in Config.IdentityResources)
 				{
 					if (!context.IdentityResources.Any(i => i.Name == identityResource.Name))
 					{

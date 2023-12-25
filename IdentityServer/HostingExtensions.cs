@@ -1,4 +1,5 @@
 using IdentityServer.Model;
+using IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -46,7 +47,8 @@ namespace IdentityServer
 						sql => sql.MigrationsAssembly(migrationsAssembly));
 					opt.EnableTokenCleanup = true;
 				})
-				.AddAspNetIdentity<ApplicationUser>();
+				.AddAspNetIdentity<ApplicationUser>()
+                .AddProfileService<ProfileService>();
 			return builder.Build();
 		}
 
