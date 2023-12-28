@@ -41,3 +41,12 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\ref\We
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\WebClient.sourcelink.json
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Pages\appsettings.Development.json
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Pages\appsettings.json
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Apache.Arrow.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\OpenAI.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\OpenAI.Utilities.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\CsvHelper.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\MathNet.Numerics.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.Data.Analysis.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.ML.DataView.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\libman.json
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Newtonsoft.Json.dll

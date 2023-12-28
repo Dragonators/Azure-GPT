@@ -10,6 +10,7 @@ namespace IdentityServer
 	internal static class HostingExtensions
 	{
 		public static SqlConnectionStringBuilder Sqlbuilder { get; set; }
+		private static string strc;
 		public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
 		{
 			var migrationsAssembly = typeof(Program).Assembly.GetName().Name;
@@ -78,6 +79,8 @@ namespace IdentityServer
 			Sqlbuilder.IntegratedSecurity = true;
 			Sqlbuilder.InitialCatalog = "IdentityServer";
 			Sqlbuilder.TrustServerCertificate = true;//?
-		}
+			strc = "Server=tcp:dragonator.database.windows.net,1433;Initial Catalog=IdentityServer;Persist Security Info=False;User ID=CloudSA5ac73c49;Password=Abcd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+
+        }
 	}
 }

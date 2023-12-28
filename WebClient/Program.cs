@@ -69,6 +69,10 @@ builder.Services.AddUserAccessTokenHttpClient("user_client",configureClient: cli
 {
 	client.BaseAddress = new Uri("https://localhost:6001/");
 });
+builder.Services.AddUserAccessTokenHttpClient("Chat_client", configureClient: client =>
+{
+	client.BaseAddress = new Uri("https://localhost:7001/");
+});
 
 var app = builder.Build();
 
