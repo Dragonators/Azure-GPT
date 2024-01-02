@@ -11,7 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "WebClient\WebC
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAi_API", "OpenAi_API\OpenAi_API.csproj", "{5237141F-08B7-439C-B64E-7E9B933CA269}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAi_APITests", "OpenAi_APITests\OpenAi_APITests.csproj", "{CFD8808C-C282-4E62-88CB-F6F9B4E64BE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAi_APITests", "OpenAi_APITests\OpenAi_APITests.csproj", "{CFD8808C-C282-4E62-88CB-F6F9B4E64BE5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A88C45DD-8C3F-4250-9375-10AAD5D14879}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

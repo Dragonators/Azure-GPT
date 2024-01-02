@@ -6,6 +6,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Include="..\.editorconfig" Link=".editorconfig" />
+	</ItemGroup>
+
+	<ItemGroup>
 
 		<PackageReference Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.6" />
 

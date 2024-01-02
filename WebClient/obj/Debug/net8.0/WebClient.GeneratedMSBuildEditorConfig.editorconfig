@@ -9,59 +9,59 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = WebClient
 build_property.RootNamespace = WebClient
-build_property.ProjectDir = C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\
+build_property.ProjectDir = G:\Web\Azure-GPT-master\WebClient\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient
+build_property.MSBuildProjectDirectory = G:\Web\Azure-GPT-master\WebClient
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/ChatGPT.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/ChatGPT.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2hhdEdQVC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/ClientApi.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/ClientApi.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xpZW50QXBpLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Error.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Index.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Profile.cshtml]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJvZmlsZS5jc2h0bWw=
+[G:/Web/Azure-GPT-master/WebClient/Pages/OpenAI.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT3BlbkFJLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Shared/_ValidationScriptsPartial.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Signout.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Signout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2lnbm91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/UserApi.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/UserApi.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXNlckFwaS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/_ViewImports.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/_ViewStart.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Shared/GPT.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Shared/GPT.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXEdQVC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = b-75gmhwghm1
 
-[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/WebClient/Pages/Shared/_Layout.cshtml]
+[G:/Web/Azure-GPT-master/WebClient/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-fxb6eae6jp

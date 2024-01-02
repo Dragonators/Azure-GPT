@@ -1,24 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj": {}
+    "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj": {
+    "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
+        "projectUniqueName": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
         "projectName": "OpenAi_API",
-        "projectPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
-        "packagesPath": "C:\\Users\\xuanhao.ji\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\obj\\",
+        "projectPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
+        "packagesPath": "C:\\Users\\Dragonator\\.nuget\\packages\\",
+        "outputPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\xuanhao.ji\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Dragonator\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -48,6 +47,24 @@
             "Betalgo.OpenAI": {
               "target": "Package",
               "version": "[7.4.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

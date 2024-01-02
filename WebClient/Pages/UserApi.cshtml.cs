@@ -21,10 +21,10 @@ namespace WebClient.Pages
         }
         public async Task CallApi()
         {
-            using (var client = _factory.CreateClient("user_client"))
+            using (var client = _factory.CreateClient("Chat_client"))
             {
                 //content = JsonSerializer.Serialize(JsonDocument.Parse(await client.GetStringAsync("WeatherForecast")), new JsonSerializerOptions { WriteIndented = true });
-                content = JsonSerializer.Serialize(JsonDocument.Parse(await client.GetStringAsync("WeatherForecast/1")), new JsonSerializerOptions { WriteIndented = true });
+                client.PostAsync("CancelOperation/1", new StringContent(""));
             }
         }
     }

@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
 builder.Services.AddAuthentication(opt =>
 {
 	opt.DefaultScheme = "Cookies";
@@ -93,5 +94,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages().RequireAuthorization();
+app.MapControllers().RequireAuthorization();
 
 app.Run();
