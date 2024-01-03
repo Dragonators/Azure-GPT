@@ -3,21 +3,8 @@ var stopButton = document.getElementById("stopbutton");
 var newchatButton = document.getElementById("newchatbutton");
 var accessToken = getAccessToken();
 var initDictionary = {};
-function getAccessToken() {
-    let returnVal = "";
 
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://localhost:5002/AccessToken/UserToken", false);
-    xhr.send();
-    returnVal = xhr.responseText;
-
-
-
-    console.log(returnVal);////////
-
-
-    return returnVal;
-}
+prepareNavlink();
 
 //停止响应信号
 var stopRequest = false;
@@ -34,8 +21,16 @@ newchatButton.addEventListener("click", function (event) {
     event.preventDefault();
 });
 
-prepareNavlink();
+function getAccessToken() {
+    let returnVal = "";
 
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://localhost:5002/AccessToken/UserToken", false);
+    xhr.send();
+    returnVal = xhr.responseText;
+
+    return returnVal;
+}
 function sendText() {
     let form = document.forms["ChatForm"];
     if (!form.checkValidity()) {
@@ -68,8 +63,8 @@ function sendText() {
     httpRequest.onprogress = function (e) {
         //处理响应数据
         let markdown = e.target.responseText;
-        let html = marked.parse(markdown); 
-        let scrolldiv=messageList.parentElement.parentElement;
+        let html = marked.parse(markdown);
+        let scrolldiv = messageList.parentElement.parentElement;
         gptTextElement.innerHTML = html;
         scrolldiv.scrollTop = scrolldiv.scrollHeight;
 
@@ -118,8 +113,7 @@ function createUserCardElement() {
     `;
     return cardDiv;
 }
-//创建新的会话UI框架
-function createNavlinkElement(guid,text) {
+function createNavlinkElement(guid, text) {
     let Navlink = document.createElement('a');
     Navlink.classList.add('nav-link');
     Navlink.setAttribute('data-bs-toggle', 'pill');
@@ -135,6 +129,7 @@ function createGroupTitleElement(text) {
     groupTitle.id = text.replace(/\s*/g, "");
     return groupTitle;
 }
+//创建新的会话框架
 async function createNewChatList() {
     let messageHistory = document.getElementById('messagehistory');
     let groupTitle = document.getElementById('Today');
@@ -143,7 +138,7 @@ async function createNewChatList() {
     let guid = await getGuid();
 
     //创建 navlink item
-    let Navlink = createNavlinkElement(guid,"New Chat");
+    let Navlink = createNavlinkElement(guid, "New Chat");
 
     //添加 navlink item
     if (groupTitle == null || groupTitle.textContent !== "Today") {
@@ -157,6 +152,12 @@ async function createNewChatList() {
     }
     //创建并添加navlink对应的tab-pane
     AddTabPane(guid);
+
+    Navlink.addEventListener('shown.bs.tab', event => {
+        let messageList = document.getElementById(guid);
+        let scrolldiv = messageList.parentElement.parentElement;
+        scrolldiv.scrollTop = scrolldiv.scrollHeight;
+    });
     //显示新的tab-pane
     new bootstrap.Tab(Navlink).show();
 }
@@ -172,18 +173,18 @@ async function getGuid() {
         .then(response => response.text())//用text()而不是json()，因为返回的是一个字符串
         .then(data => {
             //console.log(data);
-            guid=data;
+            guid = data;
         })
         .catch(error => {
             console.error(error);
         });
-    return 'gpt'+guid;//数字不能作为ID选择器开头
+    return 'gpt' + guid;//数字不能作为ID选择器开头
 }
 //创建并添加navlink对应的tab-pane
 function AddTabPane(guid) {
     let chatContainerDiv = document.createElement("div");
     chatContainerDiv.classList.add("chat-container", "tab-pane", "fade");
-    chatContainerDiv.id=guid;                                                                                                                                                        
+    chatContainerDiv.id = guid;
     chatContainerDiv.innerHTML = `
             <div class="chat-header">
                 ChatGPT 3.5
@@ -192,21 +193,18 @@ function AddTabPane(guid) {
     let tabContent = document.querySelector('.tab-content');
     tabContent.insertBefore(chatContainerDiv, tabContent.lastElementChild);
 }
-//async function PrepareFramework() {
-//    prepareNavlink();
-//    prepareTabPane();
-//}
-
-//prepareNavlink and basic tab-pane
+/**
+* 初始化navlink表与基础tab - pane结构
+*/
 async function prepareNavlink() {
     let messageHistory = document.getElementById('messagehistory');
     let now = new Date();
     let date;
     let diff;
     let navlink;
-    let longest = 0;
+    let array = [0, 0, 0, 0, 0];;
 
-    messageHistory.style.display="none";
+    messageHistory.style.display = "none";
 
     messageHistory.appendChild(createGroupTitleElement("Today"));
     messageHistory.appendChild(createGroupTitleElement("Yesterday"));
@@ -220,6 +218,7 @@ async function prepareNavlink() {
     let groupP30 = document.getElementById("Previous30Days");
     let groupL = document.getElementById("Longago");
 
+    //获取navlink list
     await fetch(`https://localhost:7001/Chat/GetNavAsync?userId=${document.forms["ChatForm"].userId.value}`, {
         method: 'GET',
         headers: {
@@ -230,122 +229,81 @@ async function prepareNavlink() {
         .then(data => {
             data = JSON.parse(data);
             if (data !== null) {
-            data.forEach(item => {
-                //create and add navlink item
-                date = new Date(item.createAt);
-                diff = now.getTime() - date.getTime();
-                navlink = createNavlinkElement(item.navId, item.navName);
+                data.forEach(item => {
+                    date = new Date(item.createAt);
+                    diff = now.getTime() - date.getTime();
+                    navlink = createNavlinkElement(item.navId, item.navName);
 
-                if (diff > longest) longest = diff;
+                    //按照日期将navlink插入到对应的group-title中
+                    if (diff <= 1 * 24 * 60 * 60 * 1000) {
+                        messageHistory.insertBefore(navlink, groupY);
+                        array[0] = 1;
+                    } else if (diff <= 2 * 24 * 60 * 60 * 1000) {
+                        messageHistory.insertBefore(navlink, groupP7);
+                        array[1] = 1;
+                    } else if (diff <= 7 * 24 * 60 * 60 * 1000) {
+                        messageHistory.insertBefore(navlink, groupP30);
+                        array[2] = 1;
+                    } else if (diff <= 30 * 24 * 60 * 60 * 1000) {
+                        messageHistory.insertBefore(navlink, groupL);
+                        array[3] = 1;
+                    } else {
+                        messageHistory.appendChild(navlink);
+                        array[4] = 1;       
+                    }
+                    //设置navId对应的tab-pane尚未初始化
+                    initDictionary[`${item.navId}`] = false;
 
-                if (diff <= 1 * 24 * 60 * 60 * 1000) {
-                    messageHistory.insertBefore(navlink, groupY);
-                } else if (diff <= 2 * 24 * 60 * 60 * 1000) {
-                    messageHistory.insertBefore(navlink, groupP7);
-                } else if (diff <= 7 * 24 * 60 * 60 * 1000) {
-                    messageHistory.insertBefore(navlink, groupP30);
-                } else if (diff <= 30 * 24 * 60 * 60 * 1000) {
-                    messageHistory.insertBefore(navlink, groupL);
-                } else {
-                    messageHistory.appendChild(navlink);
-                }
+                    //延迟获取详细历史记录，避免页面卡顿
+                    document.querySelector(`a[data-bs-target="#${item.navId}"]`).addEventListener('shown.bs.tab', async event => {
+                        let messageList = document.getElementById(item.navId);
+                        if (initDictionary[`${item.navId}`] === false) {
+                            await fetch(`https://localhost:7001/Chat/GetHisAsync?navId=${item.navId}`, {
+                                method: 'GET',
+                                headers: {
+                                    'Authorization': `Bearer ${accessToken}`
+                                }
+                            })
+                                .then(response => response.json())
+                                .then(data => {
+                                    data = JSON.parse(data);
+                                    if (data !== null) {
 
-                initDictionary[`${item.navId}`]=false;
 
-                document.querySelector(`a[data-bs-target="#${item.navId}"]`).addEventListener('shown.bs.tab', async event => {
-                    if (initDictionary[`${item.navId}`] === false) { 
-                    let messageList = document.getElementById(item.navId);
-                    await fetch(`https://localhost:7001/Chat/GetHisAsync?navId=${item.navId}`, {
-                        method: 'GET',
-                        headers: {
-                            'Authorization': `Bearer ${accessToken}`
+                                        data.forEach(item => {
+                                            let markdown = item.message;
+                                            let html = marked.parse(markdown);
+                                            if (item.role == "user") {
+                                                let userCardElement = createUserCardElement();
+                                                userCardElement.querySelector(".text").innerHTML = html;
+                                                messageList.appendChild(userCardElement);
+                                            }
+                                            else if (item.role == "assistant") {
+                                                let gptCardElement = createGPTCardElement();
+                                                gptCardElement.querySelector(".text").innerHTML = html;
+                                                messageList.appendChild(gptCardElement);
+                                            }
+                                        });
+                                    }
+                                })
+                                .catch(error => console.error('Error:', error));
+                            initDictionary[`${item.navId}`] = true;
                         }
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            data = JSON.parse(data);
-                            if (data !== null) {
-
-                            
-                            data.forEach(item => {
-                                let markdown = item.message;
-                                let html = marked.parse(markdown);
-                                if (item.role == "user") {
-                                    let userCardElement = createUserCardElement();
-                                    userCardElement.querySelector(".text").innerHTML = html;
-                                    messageList.appendChild(userCardElement);
-                                }
-                                else if (item.role == "assistant") {
-                                    let gptCardElement = createGPTCardElement();
-                                    gptCardElement.querySelector(".text").innerHTML = html;
-                                    messageList.appendChild(gptCardElement);
-                                }
-                            });
-                            }
-                        })
-                        .catch(error => console.error('Error:', error));
-                    let scrolldiv = messageList.parentElement.parentElement;
+                        let scrolldiv = messageList.parentElement.parentElement;
                         scrolldiv.scrollTop = scrolldiv.scrollHeight;
-                        initDictionary[`${item.navId}`] = true;
-                    }
+                    });
+                    //create and add tab-pane
+                    AddTabPane(item.navId);
+
                 });
-
-                AddTabPane(item.navId);
-
-            });
-            if (longest <= 30 * 24 * 60 * 60 * 1000) {
-                groupL.remove();
-                if (longest <= 7 * 24 * 60 * 60 * 1000) {
-                    groupP30.remove();
-                    if (longest <= 2 * 24 * 60 * 60 * 1000) {
-                        groupP7.remove();
-                        if (longest <= 1 * 24 * 60 * 60 * 1000) {
-                            groupY.remove();
-                            if (longest == 0) groupT.remove();
-                        }
-                    }
-                }
-                }
+                //只保留合法的group-title
+                if (array[0] == 0) groupT.remove();
+                if (array[1] == 0) groupY.remove();
+                if (array[2] == 0) groupP7.remove();
+                if (array[3] == 0) groupP30.remove();
+                if (array[4] == 0) groupL.remove();
             }
         })
         .catch(error => console.error('Error:', error));
     messageHistory.style.display = "block";
-}
-
-//prepare specific tab-pane
-async function prepareTabPane() {
-    //console.log(event.target);
-    console.log(1); // 输出data-bs-target属性的值
-
-    //let messageList = document.querySelector('.tab-content').querySelector('.active');
-    //let tabPane;
-    //let navlink;
-    //let longest = 0;
-
-    //tabContent.style.display = "none";
-
-    //await fetch(`https://localhost:7001/Chat/GetHisAsync?navId=${document.forms["ChatForm"].userId.value}`, {
-    //    method: 'GET',
-    //    headers: {
-    //        'Authorization': `Bearer ${accessToken}`
-    //    }
-    //})
-    //    .then(response => response.json())
-    //    .then(data => {
-    //        data = JSON.parse(data);
-    //        data.forEach(item => {
-    //            //create and add navlink item
-    //            tabPane = document.createElement('div');
-    //            tabPane.classList.add('chat-container', 'tab-pane', 'fade');
-    //            tabPane.id = item.navId;
-    //            tabPane.innerHTML = `
-    //                <div class="chat-header">
-    //                    ChatGPT 3.5
-    //                </div>
-    //            `;
-    //            tabContent.appendChild(tabPane);
-    //        });
-    //    })
-    //    .catch(error => console.error('Error:', error));
-    //tabContent.style.display = "block";
 }

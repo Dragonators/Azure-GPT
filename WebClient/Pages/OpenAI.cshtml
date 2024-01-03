@@ -33,45 +33,19 @@
 
 			<div class="col-md-10 chat">
 				<div class="tab-content">
-					@* <div class="chat-container tab-pane fade show active" id="test1">
-						<div class="chat-header">
-							ChatGPT 3.5
-						</div>
-					</div>
-					<div class="chat-container tab-pane fade" id="test2">
+					@* <div class="chat-container tab-pane fade" id="test2">
 						<div class="chat-header">
 							ChatGPT 3.5
 						</div>
 						<div class="chat-message">
 							<div class="sender">You</div>
-							<div class="text">我现在有个web三方登录，使用三方identityserver身份认证服务器，oidc认证，我的客户端需要三方认证登录用户的唯一id信息，如果直接从claim方式获取会不会不安全？有没有更加安全的方法？</div>
+							<div class="text">...</div>
 						</div>
 						<div class="chat-message">
 							<div class="sender">ChatGPT</div>
-							<div class="text">使用 claims 来传递用户信息是一种常见的方式，但确保安全性的关键在于使用 HTTPS 加密您的通信。Claims 在身份验证和授权过程中是必要的，并且在传输过程中的加密可以确保它们不被中间人攻击。<br><br>然而，如果你对使用 claims 感到不安全，你可以考虑以下方法：<br>1. Token Introspection: 使用 OAuth 2.0 Token Introspection 协议，该协议允许客户端通过在身份认证服务器进行额外请求来验证令牌的有效性。这是一种在客户端与身份认证服务器之间进行信息交换的方式。<br>2. UserInfo Endpoint: OIDC 规范定义了 UserInfo Endpoint，允许客户端通过 HTTP 请求来获取关于已认证用户的信息。这种方式可以在用户已经通过 OIDC 认证并获取令牌后进行。<br>3. Silent Renewal: 使用 OIDC 的 Silent Renewal（静默更新）机制，定期刷新令牌来获取新的用户信息。这是在用户仍然活跃的情况下更新令牌的一种方式。<br><br>选择哪种方法取决于你的具体需求和安全策略。在实际应用中，通常会结合使用上述的 claims 和其他安全手段来确保用户数据的安全。</div>
+							<div class="text">...</div>
 						</div>
-						<div class="chat-message">
-							<div class="sender">You</div>
-							<div class="text">谢谢url是什么格式呢？什么时候介绍给我详细的情况一下吗？</div>
-						</div>
-						<div class="chat-message">
-							<div class="sender">ChatGPT</div>
-							<div class="text">使用 claims 来传递用户信息是一种常见的方式，但确保安全性的关键在于使用 HTTPS 加密您的通信。Claims 在身份验证和授权过程中是必要的，并且在传输过程中的加密可以确保它们不被中间人攻击。<br><br>然而，如果你对使用 claims 感到不安全，你可以考虑以下方法：<br>1. Token Introspection: 使用 OAuth 2.0 Token Introspection 协议，该协议允许客户端通过在身份认证服务器进行额外请求来验证令牌的有效性。这是一种在客户端与身份认证服务器之间进行信息交换的方式。<br>2. UserInfo Endpoint: OIDC 规范定义了 UserInfo Endpoint，允许客户端通过 HTTP 请求来获取关于已认证用户的信息。这种方式可以在用户已经通过 OIDC 认证并获取令牌后进行。<br>3. Silent Renewal: 使用 OIDC 的 Silent Renewal（静默更新）机制，定期刷新令牌来获取新的用户信息。这是在用户仍然活跃的情况下更新令牌的一种方式。<br><br>选择哪种方法取决于你的具体需求和安全策略。在实际应用中，通常会结合使用上述的 claims 和其他安全手段来确保用户数据的安全。</div>
-						</div>
-						<div class="chat-message">
-							<div class="sender">You</div>
-							<div class="text">谢谢url是什么格式呢？什么时候介绍给我详细的情况一下吗？</div>
-						</div>
-						<div class="chat-message">
-							<div class="sender">ChatGPT</div>
-							<div class="text">使用 claims 来传递用户信息是一种常见的方式，但确保安全性的关键在于使用 HTTPS 加密您的通信。Claims 在身份验证和授权过程中是必要的，并且在传输过程中的加密可以确保它们不被中间人攻击。<br><br>然而，如果你对使用 claims 感到不安全，你可以考虑以下方法：<br>1. Token Introspection: 使用 OAuth 2.0 Token Introspection 协议，该协议允许客户端通过在身份认证服务器进行额外请求来验证令牌的有效性。这是一种在客户端与身份认证服务器之间进行信息交换的方式。<br>2. UserInfo Endpoint: OIDC 规范定义了 UserInfo Endpoint，允许客户端通过 HTTP 请求来获取关于已认证用户的信息。这种方式可以在用户已经通过 OIDC 认证并获取令牌后进行。<br>3. Silent Renewal: 使用 OIDC 的 Silent Renewal（静默更新）机制，定期刷新令牌来获取新的用户信息。这是在用户仍然活跃的情况下更新令牌的一种方式。<br><br>选择哪种方法取决于你的具体需求和安全策略。在实际应用中，通常会结合使用上述的 claims 和其他安全手段来确保用户数据的安全。</div>
-						</div>
-					</div>
-					<div class="chat-container tab-pane fade" id="test3">
-						<div class="chat-header">
-							ChatGPT 3.5
-						</div>
-					</div> *@
+					</div>*@
 					<br>
 				</div>
 				<form name="ChatForm" class="needs-validation" novalidate>

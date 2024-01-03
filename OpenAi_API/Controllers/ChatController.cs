@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Mvc;
 using OpenAI.Interfaces;
 using OpenAI.ObjectModels;
 using OpenAI.ObjectModels.RequestModels;
@@ -10,6 +11,7 @@ using Microsoft.Identity.Client;
 using OpenAi_API.Model;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
 
 namespace OpenAi_API.Controllers
 {
@@ -45,36 +47,9 @@ namespace OpenAi_API.Controllers
             _context.Entry(history)
                 .Collection(b => b.chatMessages)
                 .Load();
-            //var history = _context.Navlinks.AsNoTracking()
-            //    .Where(i => i.navId == navId)
-            //    .Include(i => i.chatMessages)
-            //    .FirstOrDefaultAsync();
             history.chatMessages= history.chatMessages.OrderBy(i => i.creatAt).ToList();
             return new JsonResult(JsonSerializer.Serialize(history.chatMessages));
         }
-        //     [HttpGet("async/{userId}")]
-        //     public IAsyncEnumerable<ChatCompletionCreateResponse> PostMessageAsync(string userId, [FromBody]string message = "Please write an eaasy praising your motherland")
-        //     {
-        //var cancellationTokenSource = new CancellationTokenSource();
-        //if (!TokenSources.TryAdd(userId, cancellationTokenSource))
-        //{
-        //	if (!TokenSources.TryGetValue(userId, out cancellationTokenSource)) throw new Exception("Unknown Error");
-        //}
-
-        //var completionResult = _openAiService.ChatCompletion.CreateCompletionAsStream(new ChatCompletionCreateRequest
-        //{
-        //	Messages = new List<ChatMessage>
-        //	{
-        //		new(StaticValues.ChatMessageRoles.System, "you are a helpful assistant"),
-        //		new(StaticValues.ChatMessageRoles.User, message),
-        //		new(StaticValues.ChatMessageRoles.User, "please give me some reference")
-        //	},
-        //	Model = Models.Gpt_3_5_Turbo_1106,
-        //	Temperature = (float?)0.7
-        //	//MaxTokens  b = 150//optional
-        //}, null, cancellationTokenSource.Token);
-        //return completionResult;
-        //     }
         [HttpPost("ChatAsStreamAsync")]
         public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId)
         {
@@ -88,9 +63,11 @@ namespace OpenAi_API.Controllers
 		            throw new Exception("Unknown Error");
 	            }
             }
-
+            var timenow=DateTime.Now;
+            
             var completionResult = _openAiService.ChatCompletion.CreateCompletionAsStream(new ChatCompletionCreateRequest
             {
+
                 Messages = new List<ChatMessage>
                 {
                     new(StaticValues.ChatMessageRoles.System, "你是一位有能力的中文助理"),
@@ -98,8 +75,8 @@ namespace OpenAi_API.Controllers
                     new(StaticValues.ChatMessageRoles.User, "请为我提供一些参考")
                 },
                 Model = Models.Gpt_3_5_Turbo_1106,
-                Temperature = (float?)0.7
-                //MaxTokens  b = 150//optional
+                Temperature = (float?)0.7,
+                MaxTokens = 150//optional
             }, null, cancellationTokenSource.Token);
 
             Response.Headers.Add("Content-Type", "text/event-stream");
@@ -132,13 +109,28 @@ namespace OpenAi_API.Controllers
             if(!cancellationTokenSource.IsCancellationRequested)
             {
 	            Response.Body.Close();
-	            await SaveChatRecord(message, navId, StaticValues.ChatMessageRoles.User);
+	            await SaveChatRecord(message, navId, StaticValues.ChatMessageRoles.User, timenow);
 
-	            await SaveChatRecord(gptMessage.ToString(), navId, StaticValues.ChatMessageRoles.Assistant);
+	            await SaveChatRecord(gptMessage.ToString(), navId, StaticValues.ChatMessageRoles.Assistant,DateTime.Now);
                 (await _context.Navlinks.FirstOrDefaultAsync(i=>i.navId==navId)).createAt=DateTime.Now;
                 await _context.SaveChangesAsync();
             }
 		}
+        private async Task<IEnumerable<ChatMessage>> CurrentChatHistory(string navId)
+        {
+            var history = await _context.Navlinks.AsNoTracking()
+                .FirstOrDefaultAsync(i => i.navId == navId);
+            _context.Entry(history)
+                .Collection(b => b.chatMessages)
+                .Load();
+            history.chatMessages = history.chatMessages.OrderBy(i => i.creatAt).ToList();
+            var chatHistory = new List<ChatMessage>();
+            foreach (var item in history.chatMessages)
+            {
+                chatHistory.Add(new ChatMessage(item.role, item.message));
+            }
+            return chatHistory;
+        }
         [HttpPost("sync/{userId}")]
         public async Task<ActionResult<string>> PostMessageSync(string message, string userId)
         {
@@ -206,12 +198,12 @@ namespace OpenAi_API.Controllers
 
 			return navId;
 		}
-        private async Task SaveChatRecord(string text,string navId,string role)
+        private async Task SaveChatRecord(string text,string navId,string role,DateTime time)
         {
 	        _context.Add(new HistoryMessage
             {
 				message=text,
-                creatAt = DateTime.Now,
+                creatAt = time,
                 navId = navId,
                 role = role
 			});

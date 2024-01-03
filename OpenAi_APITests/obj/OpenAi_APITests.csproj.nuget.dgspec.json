@@ -1,23 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "G:\\Web\\Azure-GPT-master\\OpenAi_APITests\\OpenAi_APITests.csproj": {}
+    "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_APITests\\OpenAi_APITests.csproj": {}
   },
   "projects": {
-    "G:\\Web\\Azure-GPT-master\\OpenAi_APITests\\OpenAi_APITests.csproj": {
+    "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_APITests\\OpenAi_APITests.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Web\\Azure-GPT-master\\OpenAi_APITests\\OpenAi_APITests.csproj",
+        "projectUniqueName": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_APITests\\OpenAi_APITests.csproj",
         "projectName": "OpenAi_APITests",
-        "projectPath": "G:\\Web\\Azure-GPT-master\\OpenAi_APITests\\OpenAi_APITests.csproj",
-        "packagesPath": "C:\\Users\\Dragonator\\.nuget\\packages\\",
-        "outputPath": "G:\\Web\\Azure-GPT-master\\OpenAi_APITests\\obj\\",
+        "projectPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_APITests\\OpenAi_APITests.csproj",
+        "packagesPath": "C:\\Users\\xuanhao.ji\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_APITests\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dragonator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xuanhao.ji\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj": {
-                "projectPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj"
+              "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj": {
+                "projectPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj"
               }
             }
           }
@@ -93,20 +94,21 @@
         }
       }
     },
-    "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj": {
+    "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
+        "projectUniqueName": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
         "projectName": "OpenAi_API",
-        "projectPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
-        "packagesPath": "C:\\Users\\Dragonator\\.nuget\\packages\\",
-        "outputPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\obj\\",
+        "projectPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
+        "packagesPath": "C:\\Users\\xuanhao.ji\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\Dragonator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\xuanhao.ji\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -133,6 +135,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Alachisoft.NCache.OpenSource.SDK": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
             "Betalgo.OpenAI": {
               "target": "Package",
               "version": "[7.4.3, )"

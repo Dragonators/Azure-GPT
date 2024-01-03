@@ -9,123 +9,123 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = IdentityServer
 build_property.RootNamespace = IdentityServer
-build_property.ProjectDir = G:\Web\Azure-GPT-master\IdentityServer\
+build_property.ProjectDir = C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = G:\Web\Azure-GPT-master\IdentityServer
+build_property.MSBuildProjectDirectory = C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer
 build_property._RazorSourceGeneratorDebug = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/AccessDenied.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/AccessDenied.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBY2Nlc3NEZW5pZWQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Admin/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Admin/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxBZG1pblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Login/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Login/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dpblxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Logout/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Logout/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dvdXRcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Logout/LoggedOut.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Logout/LoggedOut.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxMb2dvdXRcTG9nZ2VkT3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Profile/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Profile/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxQcm9maWxlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Account/Register/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Account/Register/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudFxSZWdpc3RlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Ciba/All.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Ciba/All.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2liYVxBbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Ciba/Consent.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Ciba/Consent.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2liYVxDb25zZW50LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Ciba/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Ciba/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2liYVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Ciba/_ScopeListItem.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Ciba/_ScopeListItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2liYVxfU2NvcGVMaXN0SXRlbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Consent/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Consent/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc2VudFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Consent/_ScopeListItem.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Consent/_ScopeListItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29uc2VudFxfU2NvcGVMaXN0SXRlbS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Device/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Device/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV2aWNlXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Device/Success.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Device/Success.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV2aWNlXFN1Y2Nlc3MuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Device/_ScopeListItem.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Device/_ScopeListItem.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGV2aWNlXF9TY29wZUxpc3RJdGVtLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Diagnostics/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Diagnostics/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGlhZ25vc3RpY3NcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/ExternalLogin/Callback.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/ExternalLogin/Callback.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXh0ZXJuYWxMb2dpblxDYWxsYmFjay5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/ExternalLogin/Challenge.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/ExternalLogin/Challenge.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXh0ZXJuYWxMb2dpblxDaGFsbGVuZ2UuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Grants/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Grants/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR3JhbnRzXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Home/Error/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Home/Error/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZVxFcnJvclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Redirect/Index.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Redirect/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVkaXJlY3RcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Shared/_Layout.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Shared/_Nav.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Shared/_Nav.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9OYXYuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/Shared/_ValidationSummary.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/Shared/_ValidationSummary.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU3VtbWFyeS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/_ViewImports.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[G:/Web/Azure-GPT-master/IdentityServer/Pages/_ViewStart.cshtml]
+[C:/Users/xuanhao.ji/source/repos/Azure-GPT-API/IdentityServer/Pages/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

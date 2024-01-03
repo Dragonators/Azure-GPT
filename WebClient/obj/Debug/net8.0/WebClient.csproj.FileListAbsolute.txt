@@ -103,3 +103,4 @@ G:\Web\Azure-GPT-master\WebClient\obj\Debug\net8.0\refint\WebClient.dll
 G:\Web\Azure-GPT-master\WebClient\obj\Debug\net8.0\WebClient.pdb
 G:\Web\Azure-GPT-master\WebClient\obj\Debug\net8.0\WebClient.genruntimeconfig.cache
 G:\Web\Azure-GPT-master\WebClient\obj\Debug\net8.0\ref\WebClient.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\obj\Debug\net8.0\scopedcss\Pages\Shared\GPT.cshtml.rz.scp.css
