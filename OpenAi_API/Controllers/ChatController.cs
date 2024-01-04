@@ -1,17 +1,13 @@
-﻿using System.Collections;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using OpenAI.Interfaces;
 using OpenAI.ObjectModels;
 using OpenAI.ObjectModels.RequestModels;
-using OpenAI.ObjectModels.ResponseModels;
-using System.Collections.Concurrent;
-using System.Text;
-using System.Net;
-using Microsoft.Identity.Client;
 using OpenAi_API.Model;
-using Microsoft.EntityFrameworkCore;
+using System.Collections.Concurrent;
+using System.Collections.Immutable;
+using System.Text;
 using System.Text.Json;
-using Microsoft.IdentityModel.Tokens;
 
 namespace OpenAi_API.Controllers
 {
@@ -35,23 +31,17 @@ namespace OpenAi_API.Controllers
         {
             var Navlinks = await _context.Navlinks.AsNoTracking()
                 .Where(i=>i.userId==userId)
-                .OrderByDescending(i=> i.createAt)
+                .OrderByDescending(i=> i.latestAt)
                 .ToListAsync();//no chatmessages
             return new JsonResult(JsonSerializer.Serialize(Navlinks));
         }
         [HttpGet("GetHisAsync")]
         public async Task<IActionResult> GetHisAsync([FromQuery] string navId)
         {
-            var history= await _context.Navlinks.AsNoTracking()
-                .FirstOrDefaultAsync(i => i.navId == navId);
-            _context.Entry(history)
-                .Collection(b => b.chatMessages)
-                .Load();
-            history.chatMessages= history.chatMessages.OrderBy(i => i.creatAt).ToList();
-            return new JsonResult(JsonSerializer.Serialize(history.chatMessages));
+            return new JsonResult(JsonSerializer.Serialize(await CurrentChatHistory(navId)));
         }
         [HttpPost("ChatAsStreamAsync")]
-        public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId)
+        public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId, [FromForm] string prompt="")
         {
             var cancellationTokenSource = new CancellationTokenSource();
             if (!TokenSources.TryAdd(userId, cancellationTokenSource))
@@ -63,20 +53,25 @@ namespace OpenAi_API.Controllers
 		            throw new Exception("Unknown Error");
 	            }
             }
+
             var timenow=DateTime.Now;
-            
+            var chatContext = new List<ChatMessage>();
+            bool noerror = true;
+
+            //添加Prompt
+            chatContext.Add(new(StaticValues.ChatMessageRoles.System, Prompts.PromptsDict["Chinese"]));
+            //添加历史上下文
+            chatContext.AddRange(await CreatechatContext(navId));
+            //添加用户输入
+            chatContext.Add(new(StaticValues.ChatMessageRoles.User, message));
+
             var completionResult = _openAiService.ChatCompletion.CreateCompletionAsStream(new ChatCompletionCreateRequest
             {
 
-                Messages = new List<ChatMessage>
-                {
-                    new(StaticValues.ChatMessageRoles.System, "你是一位有能力的中文助理"),
-                    new(StaticValues.ChatMessageRoles.User, message),
-                    new(StaticValues.ChatMessageRoles.User, "请为我提供一些参考")
-                },
+                Messages = chatContext,
                 Model = Models.Gpt_3_5_Turbo_1106,
                 Temperature = (float?)0.7,
-                MaxTokens = 150//optional
+                //MaxTokens = 20//optional
             }, null, cancellationTokenSource.Token);
 
             Response.Headers.Add("Content-Type", "text/event-stream");
@@ -96,40 +91,48 @@ namespace OpenAi_API.Controllers
                 {
                     if (completion.Error == null)
                     {
+                        Response.Body.Close();
                         throw new Exception("Unknown Error");
                     }
                     else
                     {
-	                    gptMessage.Append(completion.Error.Message);
+	                    noerror=false;
+                        gptMessage.Append(completion.Error.Message);
 						await Response.WriteAsync(completion.Error.Message, cancellationTokenSource.Token);
                         await Response.Body.FlushAsync(cancellationTokenSource.Token);
                     }
                 }
             }
-            if(!cancellationTokenSource.IsCancellationRequested)
+            if(!cancellationTokenSource.IsCancellationRequested && noerror)
             {
 	            Response.Body.Close();
 	            await SaveChatRecord(message, navId, StaticValues.ChatMessageRoles.User, timenow);
 
 	            await SaveChatRecord(gptMessage.ToString(), navId, StaticValues.ChatMessageRoles.Assistant,DateTime.Now);
-                (await _context.Navlinks.FirstOrDefaultAsync(i=>i.navId==navId)).createAt=DateTime.Now;
+                (await _context.Navlinks.FirstOrDefaultAsync(i=>i.navId==navId)).latestAt = DateTime.Now;
                 await _context.SaveChangesAsync();
             }
 		}
-        private async Task<IEnumerable<ChatMessage>> CurrentChatHistory(string navId)
+        //无缓存的获取指定长度的聊天记录
+        private async Task<List<ChatMessage>> CreatechatContext(string navId,int length=int.MaxValue)
+        {
+            var chatContext = new List<ChatMessage>();
+            var chatHistory = (ImmutableArray<HistoryMessage>)await CurrentChatHistory(navId);
+            for (int i = chatHistory.Count()/2 < length ? 0: chatHistory.Count() - length * 2; i < chatHistory.Count(); i++)
+            {
+                chatContext.Add(new ChatMessage(chatHistory[i].role, chatHistory[i].message));
+            }
+            return chatContext;
+        }
+
+        private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
         {
             var history = await _context.Navlinks.AsNoTracking()
                 .FirstOrDefaultAsync(i => i.navId == navId);
             _context.Entry(history)
                 .Collection(b => b.chatMessages)
                 .Load();
-            history.chatMessages = history.chatMessages.OrderBy(i => i.creatAt).ToList();
-            var chatHistory = new List<ChatMessage>();
-            foreach (var item in history.chatMessages)
-            {
-                chatHistory.Add(new ChatMessage(item.role, item.message));
-            }
-            return chatHistory;
+            return history.chatMessages.OrderBy(i => i.creatAt).ToImmutableArray();
         }
         [HttpPost("sync/{userId}")]
         public async Task<ActionResult<string>> PostMessageSync(string message, string userId)
@@ -190,7 +193,7 @@ namespace OpenAi_API.Controllers
             _context.Add(new Navlink
             {
                 navId = "gpt"+navId,
-                createAt = DateTime.Now,
+                latestAt = DateTime.Now,
                 userId = userId,
                 navName = "New Chat"
             });
@@ -198,6 +201,23 @@ namespace OpenAi_API.Controllers
 
 			return navId;
 		}
+        [HttpPost("DeleteNavAsync/{navId}")]
+        public async Task<int> DeleteNavAsync(string navId)
+        {
+            //在数据库中删除指定的navlink
+            _context.Remove<Navlink>(await _context.Navlinks.FirstOrDefaultAsync(e => e.navId == navId));
+            return await _context.SaveChangesAsync();
+        }
+
+        [HttpPost("UpdateNavNameAsync")]
+        public async Task<int> UpdateNavNameAsync([FromQuery] string navId, [FromQuery]string navName)
+        {
+            //在数据库中更新指定的navlink名称
+            var navlink = await _context.Navlinks.FirstOrDefaultAsync(e => e.navId == navId);
+            navlink.navName = navName;
+            _context.Update(navlink);
+            return await _context.SaveChangesAsync();
+        }
         private async Task SaveChatRecord(string text,string navId,string role,DateTime time)
         {
 	        _context.Add(new HistoryMessage

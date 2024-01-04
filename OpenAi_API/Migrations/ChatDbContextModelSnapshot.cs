@@ -55,7 +55,7 @@ namespace OpenAi_API.Migrations
                     b.Property<string>("navId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("createAt")
+                    b.Property<DateTime>("latestAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("navName")

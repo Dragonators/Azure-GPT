@@ -4,7 +4,7 @@ namespace OpenAi_API.Model
 {
 	public class Navlink
 	{
-		public DateTime createAt { get; set; }
+		public DateTime latestAt { get; set; }
 		[Key]
 		public string navId { get; set; }
 		[Required]

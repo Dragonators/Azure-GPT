@@ -308,3 +308,5 @@ G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\refint\IdentityServer.dl
 G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\IdentityServer.pdb
 G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\IdentityServer.genruntimeconfig.cache
 G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\ref\IdentityServer.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\client.ncconf
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\config.ncconf

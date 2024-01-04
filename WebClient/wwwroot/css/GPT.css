@@ -73,10 +73,31 @@
         margin-bottom: 5px;
         padding-left: 20px; /* Added padding to the left */
     }
-.tab-content {
-    margin-left: auto;
-    margin-right: auto;
+.nav-class{
+    position: relative
 }
+.delbtn {
+    position: absolute;
+    margin-right: 5px;
+    top: 10%;
+    right: 0;
+    display:block;
+}
+.btn.delbtn {
+    color: #d5d0d0;
+    display:none;
+}
+    .btn.delbtn:hover {
+        color: #cd6855;
+    }
+    .btn.delbtn:active {
+        color: #7e4237;
+        border-color:transparent;
+    }
+    .tab-content {
+        margin-left: auto;
+        margin-right: auto;
+    }
 .chat-container {
     margin: 20px;
     background-color: #FFFFFF;

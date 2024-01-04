@@ -27,13 +27,13 @@ namespace IdentityServer.Services
 
             var claims = new List<Claim>
             {   
-                new Claim(JwtClaimTypes.WebSite,user.Website ),
-                new Claim(JwtClaimTypes.PreferredUserName,user.UserName ),
-                new Claim(JwtClaimTypes.Email,user.Email ),
-                new Claim(JwtClaimTypes.Address,user.Address),
+                new Claim(JwtClaimTypes.WebSite,user.Website ?? string.Empty),
+                new Claim(JwtClaimTypes.PreferredUserName,user.UserName),
+                new Claim(JwtClaimTypes.Email,user.Email ?? string.Empty),
+                new Claim(JwtClaimTypes.Address,user.Address ?? string.Empty),
                 new Claim(JwtClaimTypes.NickName,user.NickName),
-                new Claim(JwtClaimTypes.GivenName,user.GivenName),
-                new Claim(JwtClaimTypes.FamilyName,user.FamilyName),
+                new Claim(JwtClaimTypes.GivenName,user.GivenName ?? string.Empty),
+                new Claim(JwtClaimTypes.FamilyName,user.FamilyName ?? string.Empty),
                 new Claim(JwtClaimTypes.Name,$"{user.GivenName} {user.FamilyName}"),
 
             };

@@ -2,7 +2,7 @@
 var stopButton = document.getElementById("stopbutton");
 var newchatButton = document.getElementById("newchatbutton");
 var accessToken = getAccessToken();
-var initDictionary = {};
+var initDictionary = {};//某个navId对应的tab-pane是否已经获得详细数据
 
 prepareNavlink();
 
@@ -114,13 +114,49 @@ function createUserCardElement() {
     return cardDiv;
 }
 function createNavlinkElement(guid, text) {
+    let div = document.createElement('div');
     let Navlink = document.createElement('a');
+    let delbtn = document.createElement('button');
+
     Navlink.classList.add('nav-link');
     Navlink.setAttribute('data-bs-toggle', 'pill');
     Navlink.setAttribute('data-bs-target', `#${guid}`);
     Navlink.setAttribute('type', 'button');
     Navlink.textContent = text;
-    return Navlink;
+
+    delbtn.classList.add("btn", "delbtn");
+    delbtn.innerHTML = `<i class="bi bi-trash3-fill"></i>`;
+    //配置删除按钮相关事件
+    delbtn.addEventListener('click', async function (event) {
+        await fetch(`https://localhost:7001/Chat/DeleteNavAsync/${guid}`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        }).then(response => response.text())
+            .then(data => {
+                let intData = parseInt(data);
+                if (intData == 1) {
+                    let divlink = document.querySelector(`a[data-bs-target="#${guid}"]`).parentElement;
+                    let tabpane = document.getElementById(guid);
+                    //删除navlink对应的group-title
+                    if (divlink.previousElementSibling.className == "group-title" &&
+                       (divlink.nextElementSibling == null || divlink.nextElementSibling.className != "nav-class"))
+                       divlink.previousElementSibling.remove();
+
+                    divlink.remove();
+                    tabpane.remove();
+                }
+            })
+            .catch(error => console.error('Error:', error));
+
+        event.preventDefault();
+    });
+
+    div.classList.add("nav-class");
+    div.appendChild(Navlink);
+    div.appendChild(delbtn);
+    return div;
 }
 function createGroupTitleElement(text) {
     groupTitle = document.createElement("div");
@@ -156,10 +192,13 @@ async function createNewChatList() {
     Navlink.addEventListener('shown.bs.tab', event => {
         let messageList = document.getElementById(guid);
         let scrolldiv = messageList.parentElement.parentElement;
+        if (event.relatedTarget !== null) event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+        event.target.parentElement.lastElementChild.style.display = "block";
+
         scrolldiv.scrollTop = scrolldiv.scrollHeight;
     });
     //显示新的tab-pane
-    new bootstrap.Tab(Navlink).show();
+    new bootstrap.Tab(Navlink.firstChild).show();
 }
 //获取navlink-tabpane之间的唯一标识符
 async function getGuid() {
@@ -230,26 +269,26 @@ async function prepareNavlink() {
             data = JSON.parse(data);
             if (data !== null) {
                 data.forEach(item => {
-                    date = new Date(item.createAt);
+                    date = new Date(item.latestAt);
                     diff = now.getTime() - date.getTime();
                     navlink = createNavlinkElement(item.navId, item.navName);
 
                     //按照日期将navlink插入到对应的group-title中
                     if (diff <= 1 * 24 * 60 * 60 * 1000) {
                         messageHistory.insertBefore(navlink, groupY);
-                        array[0] = 1;
+                        array[0] += 1;
                     } else if (diff <= 2 * 24 * 60 * 60 * 1000) {
                         messageHistory.insertBefore(navlink, groupP7);
-                        array[1] = 1;
+                        array[1] += 1;
                     } else if (diff <= 7 * 24 * 60 * 60 * 1000) {
                         messageHistory.insertBefore(navlink, groupP30);
-                        array[2] = 1;
+                        array[2] += 1;
                     } else if (diff <= 30 * 24 * 60 * 60 * 1000) {
                         messageHistory.insertBefore(navlink, groupL);
-                        array[3] = 1;
+                        array[3] += 1;
                     } else {
                         messageHistory.appendChild(navlink);
-                        array[4] = 1;       
+                        array[4] += 1;       
                     }
                     //设置navId对应的tab-pane尚未初始化
                     initDictionary[`${item.navId}`] = false;
@@ -257,6 +296,8 @@ async function prepareNavlink() {
                     //延迟获取详细历史记录，避免页面卡顿
                     document.querySelector(`a[data-bs-target="#${item.navId}"]`).addEventListener('shown.bs.tab', async event => {
                         let messageList = document.getElementById(item.navId);
+                        if (event.relatedTarget !== null) event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+                        event.target.parentElement.lastElementChild.style.display = "block";
                         if (initDictionary[`${item.navId}`] === false) {
                             await fetch(`https://localhost:7001/Chat/GetHisAsync?navId=${item.navId}`, {
                                 method: 'GET',
