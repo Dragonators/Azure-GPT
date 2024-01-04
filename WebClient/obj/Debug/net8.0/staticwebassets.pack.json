@@ -5,10 +5,6 @@
       "PackagePath": "staticwebassets\\WebClient.bundle.scp.css"
     },
     {
-      "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\css\\ChatAsync.css",
-      "PackagePath": "staticwebassets\\css\\ChatAsync.css"
-    },
-    {
       "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\css\\GPT.css",
       "PackagePath": "staticwebassets\\css\\GPT.css"
     },
@@ -23,14 +19,6 @@
     {
       "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\Chat.js",
       "PackagePath": "staticwebassets\\js\\Chat.js"
-    },
-    {
-      "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\SendMessage.js",
-      "PackagePath": "staticwebassets\\js\\SendMessage.js"
-    },
-    {
-      "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\externalLibraries.js",
-      "PackagePath": "staticwebassets\\js\\externalLibraries.js"
     },
     {
       "Id": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\resize.js",

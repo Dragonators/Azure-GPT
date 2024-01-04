@@ -160,6 +160,7 @@
 }
 
 .col-md-10.chat {
+
     padding: 0;
     overflow-y: auto;
     height: calc(100vh - 78px); /* Adjusted height to match chat container */
@@ -207,3 +208,17 @@
         width: 83.33% !important;
     }
 }
+/*.cursor {
+    display: none;
+    width: 10px;
+    height: 20px;
+    background-color: black;
+    vertical-align: text-bottom;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    50% {
+        opacity: 0;
+    }
+}*/

@@ -155,12 +155,6 @@ namespace IdentityServer
 		}
 		private static async Task EnsureAdminAsync(UserManager<ApplicationUser> userManager, IServiceProvider services)
 		{
-			//var mu = await userManager.FindByNameAsync("bob");
-			//var result=await userManager.RemoveFromRolesAsync(mu, await userManager.GetRolesAsync(mu));
-			//Log.Information(result.ToString());
-			//result = await userManager.AddToRoleAsync(mu, Constants.User);
-			//Log.Information(result.ToString());
-
             if ((await userManager.GetUsersInRoleAsync(Constants.Admin)).Any())
 				return;
 			
@@ -168,7 +162,8 @@ namespace IdentityServer
 			{
 				userManager.SetAutoChangeParam<ApplicationUser>(false);
 				var baseUser = AdminUsers.Users.First();
-				for (int i = 1; i < 10; i++)
+				//only need one,followed code Just for testing performance of large amount of data initialization
+				for (int i = 1; i < 2; i++)
 				{
 					string s = JsonSerializer.Serialize(baseUser);
 					var iu = JsonSerializer.Deserialize<ApplicationUser>(s);

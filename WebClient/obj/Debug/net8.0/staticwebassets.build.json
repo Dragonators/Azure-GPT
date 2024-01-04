@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "2j+JhpVxZrjpHFsb9GhGGW5tMrMY1+xjIkNHjrgOGrI=",
+  "Hash": "ruYgtxu7LlZ9SkNPePceqaoKC4VtaajHhijXs1skLkU=",
   "Source": "WebClient",
   "BasePath": "_content/WebClient",
   "Mode": "Default",
@@ -53,25 +53,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\WebClient.bundle.scp.css"
-    },
-    {
-      "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\css\\ChatAsync.css",
-      "SourceId": "WebClient",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\",
-      "BasePath": "_content/WebClient",
-      "RelativePath": "css/ChatAsync.css",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\css\\ChatAsync.css"
     },
     {
       "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\css\\GPT.css",
@@ -150,25 +131,6 @@
       "OriginalItemSpec": "wwwroot\\js\\Chat.js"
     },
     {
-      "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\externalLibraries.js",
-      "SourceId": "WebClient",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\",
-      "BasePath": "_content/WebClient",
-      "RelativePath": "js/externalLibraries.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\externalLibraries.js"
-    },
-    {
       "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\resize.js",
       "SourceId": "WebClient",
       "SourceType": "Discovered",
@@ -186,25 +148,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\resize.js"
-    },
-    {
-      "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\SendMessage.js",
-      "SourceId": "WebClient",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\",
-      "BasePath": "_content/WebClient",
-      "RelativePath": "js/SendMessage.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\SendMessage.js"
     },
     {
       "Identity": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\WebClient\\wwwroot\\js\\site.js",

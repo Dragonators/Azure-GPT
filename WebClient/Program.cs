@@ -9,7 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddRazorPages();
-builder.Services.AddControllers();
 builder.Services.AddAuthentication(opt =>
 {
 	opt.DefaultScheme = "Cookies";
@@ -64,11 +63,7 @@ builder.Services.AddAccessTokenManagement(options =>
 });
 builder.Services.AddClientAccessTokenHttpClient("weather_client", "client1", configureClient: client =>
 {
-    client.BaseAddress = new Uri("https://localhost:6001/");
-});
-builder.Services.AddUserAccessTokenHttpClient("user_client",configureClient: client =>
-{
-	client.BaseAddress = new Uri("https://localhost:6001/");
+    client.BaseAddress = new Uri("https://localhost:7001/");
 });
 builder.Services.AddUserAccessTokenHttpClient("Chat_client", configureClient: client =>
 {
@@ -94,6 +89,14 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages().RequireAuthorization();
-app.MapControllers().RequireAuthorization();
+app.MapGet("/UserToken", async (HttpContext httpcontext) =>
+{
+    var token = await httpcontext.GetUserAccessTokenAsync();
+    if (token != null)
+    {
+        return token;
+    }
+    return "";
+}).RequireAuthorization();;
 
 app.Run();

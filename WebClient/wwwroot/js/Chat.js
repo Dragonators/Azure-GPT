@@ -25,13 +25,18 @@ function getAccessToken() {
     let returnVal = "";
 
     let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://localhost:5002/AccessToken/UserToken", false);
+    xhr.open("GET", "https://localhost:5002/UserToken", false);
     xhr.send();
     returnVal = xhr.responseText;
 
     return returnVal;
 }
 function sendText() {
+    //获取当前显示的tab-pane
+    let messageList = document.querySelector('.tab-content').querySelector('.active');
+
+    if (messageList == null) return;//刚进入页面，没有选择tab-pane时，不发送请求
+
     let form = document.forms["ChatForm"];
     if (!form.checkValidity()) {
         form.classList.add('was-validated');
@@ -43,9 +48,6 @@ function sendText() {
 
     let httpRequest = new XMLHttpRequest();
     let formdata = new FormData(form);
-
-    //获取当前显示的tab-pane
-    let messageList = document.querySelector('.tab-content').querySelector('.active');
 
     let gptCardElement = createGPTCardElement();
     let userCardElement = createUserCardElement();
@@ -203,7 +205,7 @@ async function createNewChatList() {
 //获取navlink-tabpane之间的唯一标识符
 async function getGuid() {
     let guid;
-    await fetch(`https://localhost:7001/Chat/CreateNavId/${document.forms["ChatForm"].userId.value}`, {
+    await fetch(`https://localhost:7001/Chat/CreateNavIdAsync/${document.forms["ChatForm"].userId.value}`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${accessToken}`

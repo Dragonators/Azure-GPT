@@ -124,54 +124,6 @@ namespace OpenAi_API.Controllers
             }
             return chatContext;
         }
-
-        private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
-        {
-            var history = await _context.Navlinks.AsNoTracking()
-                .FirstOrDefaultAsync(i => i.navId == navId);
-            _context.Entry(history)
-                .Collection(b => b.chatMessages)
-                .Load();
-            return history.chatMessages.OrderBy(i => i.creatAt).ToImmutableArray();
-        }
-        [HttpPost("sync/{userId}")]
-        public async Task<ActionResult<string>> PostMessageSync(string message, string userId)
-        {
-            var cancellationTokenSource = new CancellationTokenSource();
-            if (!TokenSources.TryAdd(userId, cancellationTokenSource))
-            {
-                if (!TokenSources.TryGetValue(userId, out cancellationTokenSource)) throw new Exception("Unknown Error");
-            }
-
-            var completionResult = await _openAiService.ChatCompletion.CreateCompletion(new ChatCompletionCreateRequest
-            {
-                Messages = new List<ChatMessage>
-                {
-                    new(StaticValues.ChatMessageRoles.System, "你是一位中文助理"),
-                    new(StaticValues.ChatMessageRoles.User, message),
-                    new(StaticValues.ChatMessageRoles.User, "请为我提供一些参考")
-                },
-                Model = Models.Gpt_3_5_Turbo_1106,
-                Temperature = (float?)0.7
-                //MaxTokens  b = 150//optional
-            }, null, cancellationTokenSource.Token);
-            var responseBuilder = new StringBuilder();
-            if (completionResult.Successful)
-            {
-                responseBuilder.AppendLine(completionResult.Choices.First().Message.Content);
-            }
-            else
-            {
-                if (completionResult.Error == null)
-                {
-                    throw new Exception("Unknown Error");
-                }
-
-                responseBuilder.AppendLine($"{completionResult.Error.Code}: {completionResult.Error.Message}");
-            }
-            return responseBuilder.ToString();
-        }
-
         [HttpPost("CancelOperation/{userId}")]
         public ActionResult CancelOperation(string userId)
         {
@@ -185,8 +137,8 @@ namespace OpenAi_API.Controllers
                 return StatusCode(500, "Error: can't cancel for the user");
             }
         }
-        [HttpPost("CreateNavId/{userId}")]
-        public async Task<string> CreateNavId(string userId)
+        [HttpPost("CreateNavIdAsync/{userId}")]
+        public async Task<string> CreateNavIdAsync(string userId)
         {
             var navId = Guid.NewGuid().ToString();
             //在数据库中添加新的navlink
@@ -217,6 +169,15 @@ namespace OpenAi_API.Controllers
             navlink.navName = navName;
             _context.Update(navlink);
             return await _context.SaveChangesAsync();
+        }
+        private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
+        {
+            var history = await _context.Navlinks.AsNoTracking()
+                .FirstOrDefaultAsync(i => i.navId == navId);
+            _context.Entry(history)
+                .Collection(b => b.chatMessages)
+                .Load();
+            return history.chatMessages.OrderBy(i => i.creatAt).ToImmutableArray();
         }
         private async Task SaveChatRecord(string text,string navId,string role,DateTime time)
         {
