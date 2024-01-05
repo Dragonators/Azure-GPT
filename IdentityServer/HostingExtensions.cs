@@ -1,3 +1,4 @@
+using Duende.IdentityServer.Services;
 using IdentityServer.Model;
 using IdentityServer.Services;
 using Microsoft.AspNetCore.Identity;
@@ -36,7 +37,7 @@ namespace IdentityServer
 				{
 					// https://docs.duendesoftware.com/identityserver/v6/fundamentals/resources/api_scopes#authorization-based-on-scopes
 					options.EmitStaticAudienceClaim = true;
-				})
+                })
 				.AddConfigurationStore(opt =>
 				{
 					opt.ConfigureDbContext = d => d.UseSqlServer(Sqlbuilder.ConnectionString,
@@ -64,13 +65,13 @@ namespace IdentityServer
 			app.UseStaticFiles();//VIEW
 			app.UseRouting();//VIEW
 
-			app.UseIdentityServer();
+            app.UseIdentityServer();
 
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 			app.UseAuthorization();
 			app.MapRazorPages().RequireAuthorization();//VIEW
 
-			return app;
+            return app;
 		}
 		static HostingExtensions()
 		{

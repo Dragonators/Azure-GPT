@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OpenAi_API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7772456e50d07dca0a1bb2bf779f3cead6cd1fc6")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ce9ba19ea312f97185713a0fa70ad6e998c9fb5")]
 [assembly: System.Reflection.AssemblyProductAttribute("OpenAi_API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OpenAi_API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

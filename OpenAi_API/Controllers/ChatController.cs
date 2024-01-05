@@ -40,6 +40,11 @@ namespace OpenAi_API.Controllers
         {
             return new JsonResult(JsonSerializer.Serialize(await CurrentChatHistory(navId)));
         }
+        [HttpGet("GetHisAsStreamAsync")]
+        public async Task<IActionResult> GetHisAsStreamAsync([FromQuery] string navId)
+        {
+            return new JsonResult(JsonSerializer.Serialize(await CurrentChatHistory(navId)));
+        }
         [HttpPost("ChatAsStreamAsync")]
         public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId, [FromForm] string prompt="")
         {
@@ -179,6 +184,15 @@ namespace OpenAi_API.Controllers
                 .Load();
             return history.chatMessages.OrderBy(i => i.creatAt).ToImmutableArray();
         }
+        //private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
+        //{
+        //    var history = await _context.Navlinks.AsNoTracking()
+        //        .FirstOrDefaultAsync(i => i.navId == navId);
+        //    _context.Entry(history)
+        //        .Collection(b => b.chatMessages)
+        //        .Load();
+        //    return history.chatMessages.OrderBy(i => i.creatAt);
+        //}
         private async Task SaveChatRecord(string text,string navId,string role,DateTime time)
         {
 	        _context.Add(new HistoryMessage

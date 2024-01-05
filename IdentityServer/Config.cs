@@ -93,9 +93,10 @@ namespace IdentityServer
 					AllowedGrantTypes = new List<string>(){GrantType.AuthorizationCode}, //授权码许可协议
 					AllowOfflineAccess = true,//启用对刷新令牌 refreshToken的支持
 					//登录成功的跳转地址(坑点：必须使用Https！！！)
-					RedirectUris = {"https://localhost:5002/signin-oidc"}, //mvc客户端的地址，signin-oidc:标准协议里的端点名称
+					RedirectUris = {"https://localhost:5002/signin-oidc","https://localhost:7001/swagger/oauth2-redirect.html","https://oauth.pstmn.io/v1/callback"}, //mvc客户端的地址，signin-oidc:标准协议里的端点名称
 					//登出后的跳转地址
 					PostLogoutRedirectUris = {"https://localhost:5002/signout-callback-oidc"},
+					AllowedCorsOrigins = {"https://localhost:7001"},
 					AllowedScopes =
 					{
 						IdentityServerConstants.StandardScopes.OpenId,
@@ -106,7 +107,20 @@ namespace IdentityServer
 						"roles"
 					},//允许访问的api,可以有多个
 					RequireConsent = true //是否需要用户点同意
-				}
+				},
+				//new Client()
+    //            {
+				//	ClientId = "test_client",
+				//	ClientName = "Test_Client",
+				//	AllowedGrantTypes = GrantTypes.Implicit,
+				//	AllowAccessTokensViaBrowser = true,
+				//	RedirectUris = { "https://localhost:7001/swagger/oauth2-redirect.html" },
+				//	//AllowedCorsOrigins = 
+				//	AllowedScopes =
+    //                {
+    //                    "weather_api"
+    //                }
+    //            }
 			};
 		public static void MapUser(CreateInputModel input, ref ApplicationUser user)
 		{

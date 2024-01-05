@@ -4,6 +4,8 @@ using OpenAI.Extensions;
 using OpenAi_API.Model;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Options;
+using Microsoft.OpenApi.Models;
+using static System.Net.WebRequestMethods;
 
 namespace OpenAi_API
 {
@@ -18,7 +20,41 @@ namespace OpenAi_API
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+            builder.Services.AddSwaggerGen(opt =>
+            {
+				opt.AddSecurityDefinition("oidc", new OpenApiSecurityScheme
+                {
+					Type=SecuritySchemeType.OAuth2,
+                    OpenIdConnectUrl = new Uri("https://localhost:5001/.well-known/openid-configuration"),
+                    Flows = new OpenApiOAuthFlows
+                    {
+                        AuthorizationCode = new OpenApiOAuthFlow
+                        {
+                            AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
+                            TokenUrl = new Uri("https://localhost:5001/connect/token"),
+                            Scopes = new Dictionary<string, string>
+                            {
+                                {"weather_api", "weather_api"},
+                                {"email", "email"},
+                                {"custom_resource", "custom_resource"},
+                                {"roles", "roles"},
+                                {"offline_access", "offline_access"},
+                                {"openid","openid"},
+                                {"profile","profile"}
+                            },
+                            RefreshUrl = new Uri("https://localhost:5001/connect/revocation"),
+                        },
+                    }
+
+                });
+                opt.AddSecurityDefinition("apikey",new OpenApiSecurityScheme
+                {
+                    Type=SecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Description = "Apikey"
+                });
+            });
             builder.Services.AddOpenAIService();
             builder.Services.AddDbContext<ChatDbContext>(options =>
             {
@@ -71,13 +107,21 @@ namespace OpenAi_API
 	            });
             });
 
+
 			var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(
+                    setup =>
+                    {
+                        setup.OAuthClientId("web");
+                        setup.OAuthClientSecret("secret");
+                        setup.OAuthUsePkce();
+                    }
+                    );
             }
 
             app.UseHttpsRedirection();

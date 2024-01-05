@@ -64,6 +64,7 @@ function sendText() {
     }
     httpRequest.onprogress = function (e) {
         //处理响应数据
+        console.log(e.target.responseText);
         let markdown = e.target.responseText;
         let html = marked.parse(markdown);
         let scrolldiv = messageList.parentElement.parentElement;
