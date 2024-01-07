@@ -3,6 +3,7 @@ using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,19 +31,27 @@ builder.Services.AddAuthentication(opt =>
 		opt.ResponseType = "code";
 		opt.SaveTokens = true;
 
-		opt.Scope.Add("profile");
-		opt.Scope.Add("weather_api");
-		opt.Scope.Add("email");
-		opt.Scope.Add("custom_resource");
-		opt.Scope.Add("offline_access");
-        opt.Scope.Add("roles");
-        
-		opt.ClaimActions.MapUniqueJsonKey("website", JwtClaimTypes.WebSite);
+		//Api Scopes
+        opt.Scope.Add("chatcompletion_api");
+
+        opt.Scope.Add("offline_access");
+
+        /*
+         * Default Actioins of OpenIdConnectOptions
+         * this.ClaimActions.MapUniqueJsonKey("sub", "sub");
+         * this.ClaimActions.MapUniqueJsonKey("name", "name");
+         * this.ClaimActions.MapUniqueJsonKey("given_name", "given_name");
+         * this.ClaimActions.MapUniqueJsonKey("family_name", "family_name");
+         * this.ClaimActions.MapUniqueJsonKey("profile", "profile");
+         * this.ClaimActions.MapUniqueJsonKey("email", "email");
+         */
+
+        //userinfo to local Userclaims
+        opt.ClaimActions.MapUniqueJsonKey("website", JwtClaimTypes.WebSite);
         opt.ClaimActions.MapUniqueJsonKey("Nick Name", JwtClaimTypes.NickName);
         opt.ClaimActions.MapUniqueJsonKey("UserName", JwtClaimTypes.PreferredUserName);
-        opt.ClaimActions.MapUniqueJsonKey("Name", JwtClaimTypes.Name);
         opt.ClaimActions.MapUniqueJsonKey("Address", JwtClaimTypes.Address);
-        opt.ClaimActions.MapJsonKey("role", "role");
+        opt.ClaimActions.MapJsonKey("role", JwtClaimTypes.Role);
         opt.TokenValidationParameters = new TokenValidationParameters
         {
             NameClaimType = "name",
@@ -58,12 +67,8 @@ builder.Services.AddAccessTokenManagement(options =>
 		Address = "https://localhost:5001/connect/token",
 		ClientId = "client",
 		ClientSecret = "secret",
-		Scope = "weather_api"
+		Scope = "chatcompletion_api"
 	});
-});
-builder.Services.AddClientAccessTokenHttpClient("weather_client", "client1", configureClient: client =>
-{
-    client.BaseAddress = new Uri("https://localhost:7001/");
 });
 builder.Services.AddUserAccessTokenHttpClient("Chat_client", configureClient: client =>
 {

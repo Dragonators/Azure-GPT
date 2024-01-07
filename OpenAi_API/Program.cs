@@ -1,11 +1,10 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using OpenAI.Extensions;
-using OpenAi_API.Model;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using static System.Net.WebRequestMethods;
+using OpenAI.Extensions;
+using OpenAi_API.Filter;
+using OpenAi_API.Model;
 
 namespace OpenAi_API
 {
@@ -22,44 +21,30 @@ namespace OpenAi_API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen(opt =>
             {
-				opt.AddSecurityDefinition("oidc", new OpenApiSecurityScheme
+				opt.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
 					Type=SecuritySchemeType.OAuth2,
-                    OpenIdConnectUrl = new Uri("https://localhost:5001/.well-known/openid-configuration"),
                     Flows = new OpenApiOAuthFlows
                     {
-                        AuthorizationCode = new OpenApiOAuthFlow
+                        Implicit = new OpenApiOAuthFlow
                         {
                             AuthorizationUrl = new Uri("https://localhost:5001/connect/authorize"),
-                            TokenUrl = new Uri("https://localhost:5001/connect/token"),
                             Scopes = new Dictionary<string, string>
                             {
-                                {"weather_api", "weather_api"},
-                                {"email", "email"},
-                                {"custom_resource", "custom_resource"},
-                                {"roles", "roles"},
+                                {"chatcompletion_api", "Chatcompletion_API"},
                                 {"offline_access", "offline_access"},
-                                {"openid","openid"},
-                                {"profile","profile"}
                             },
-                            RefreshUrl = new Uri("https://localhost:5001/connect/revocation"),
                         },
                     }
 
                 });
-                opt.AddSecurityDefinition("apikey",new OpenApiSecurityScheme
-                {
-                    Type=SecuritySchemeType.ApiKey,
-                    Name = "Authorization",
-                    In = ParameterLocation.Header,
-                    Description = "Apikey"
-                });
+                opt.OperationFilter<AuthorizeCheckOperationFilter>();
             });
             builder.Services.AddOpenAIService();
             builder.Services.AddDbContext<ChatDbContext>(options =>
             {
                 var Sqlbuilder = new SqlConnectionStringBuilder();
-				Sqlbuilder.DataSource = @"SHA-XHJI-D1\SQLEXPRESS";
+				Sqlbuilder.DataSource = @"DESKTOP-CABO6T6";
 				Sqlbuilder.IntegratedSecurity = true;
 				Sqlbuilder.InitialCatalog = "ChatServer";
 				Sqlbuilder.TrustServerCertificate = true;
@@ -97,13 +82,13 @@ namespace OpenAi_API
             });
             builder.Services.AddAuthorization(p =>
             {
-	            //添加授权策略，名称为MyApiScope
-	            p.AddPolicy("OpenAIApiScope", opt =>
+                //添加授权策略，名称为ChatApi
+                p.AddPolicy("ChatApi", opt =>
 	            {
 					//配置鉴定用户的规则，这里表示策略要求用户通过身份认证
 					opt.RequireAuthenticatedUser();
 		            //鉴定api范围的规则,这里表示策略要求用户具有名为 "scope" 的声明，其值为 "weather_api"
-		            opt.RequireClaim("scope", "weather_api");
+		            opt.RequireClaim("scope", "chatcompletion_api");
 	            });
             });
 
@@ -117,11 +102,8 @@ namespace OpenAi_API
                 app.UseSwaggerUI(
                     setup =>
                     {
-                        setup.OAuthClientId("web");
-                        setup.OAuthClientSecret("secret");
-                        setup.OAuthUsePkce();
-                    }
-                    );
+                        setup.OAuthClientId("swagger_api");
+                    });
             }
 
             app.UseHttpsRedirection();
@@ -130,7 +112,7 @@ namespace OpenAi_API
 
             app.UseCors("AllowAll");
 
-			app.MapControllers().RequireAuthorization("OpenAIApiScope");//为路由系统中的所有 控制器API 端点设置策略;
+            app.MapControllers();//.RequireAuthorization("OpenAIApiScope");//为路由系统中的所有 控制器API 端点设置策略;
 
 			app.Run();
         }

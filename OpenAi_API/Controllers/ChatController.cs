@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OpenAI.Interfaces;
 using OpenAI.ObjectModels;
@@ -13,6 +14,7 @@ namespace OpenAi_API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Policy = "ChatApi")]
     public class ChatController : ControllerBase
     {
         private readonly IOpenAIService _openAiService;
@@ -179,6 +181,7 @@ namespace OpenAi_API.Controllers
         {
             var history = await _context.Navlinks.AsNoTracking()
                 .FirstOrDefaultAsync(i => i.navId == navId);
+            if (history is null) return null;
             _context.Entry(history)
                 .Collection(b => b.chatMessages)
                 .Load();

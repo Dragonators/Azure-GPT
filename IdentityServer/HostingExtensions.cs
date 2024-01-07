@@ -76,7 +76,7 @@ namespace IdentityServer
 		static HostingExtensions()
 		{
 			Sqlbuilder = new SqlConnectionStringBuilder();
-			Sqlbuilder.DataSource = @"SHA-XHJI-D1\SQLEXPRESS";
+			Sqlbuilder.DataSource = @"DESKTOP-CABO6T6";
 			Sqlbuilder.IntegratedSecurity = true;
 			Sqlbuilder.InitialCatalog = "IdentityServer";
 			Sqlbuilder.TrustServerCertificate = true;//?

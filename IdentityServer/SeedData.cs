@@ -104,6 +104,8 @@ namespace IdentityServer
 			{
                 context.RemoveRange(context.IdentityResources);
                 context.RemoveRange(context.Clients);
+                context.RemoveRange(context.ApiScopes);
+				context.RemoveRange(context.ApiResources);
                 context.SaveChanges();
 
                 foreach (var identityResource in Config.IdentityResources)

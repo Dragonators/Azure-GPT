@@ -13,19 +13,17 @@ namespace IdentityServer.Services
     {
         protected UserManager<ApplicationUser> _userManager;
         protected RoleManager<IdentityRole> _roleManager;
-
         public ProfileService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _roleManager = roleManager;
         }
-
         public async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             //>Processing
             var user = await _userManager.GetUserAsync(context.Subject);
 
-            var claims = new List<Claim>
+            var claims=new List<Claim>
             {   
                 new Claim(JwtClaimTypes.WebSite,user.Website ?? string.Empty),
                 new Claim(JwtClaimTypes.PreferredUserName,user.UserName),
@@ -35,9 +33,9 @@ namespace IdentityServer.Services
                 new Claim(JwtClaimTypes.GivenName,user.GivenName ?? string.Empty),
                 new Claim(JwtClaimTypes.FamilyName,user.FamilyName ?? string.Empty),
                 new Claim(JwtClaimTypes.Name,$"{user.GivenName} {user.FamilyName}"),
-
             };
-            foreach(var role in await _userManager.GetRolesAsync(user))
+
+            foreach (var role in await _userManager.GetRolesAsync(user))
             {
                 claims.Add(new Claim(JwtClaimTypes.Role, role));
             }
