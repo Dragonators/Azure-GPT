@@ -52,7 +52,6 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\libman
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Newtonsoft.Json.dll
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Pages\appsettings.Development.json
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Pages\appsettings.json
-G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\libman.json
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\WebClient.staticwebassets.runtime.json
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\WebClient.exe
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\WebClient.deps.json

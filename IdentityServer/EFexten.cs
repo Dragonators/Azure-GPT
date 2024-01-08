@@ -1,25 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Reflection;
-using IdentityServer.Model;
-using Microsoft.AspNetCore.Http;
+﻿using IdentityServer.Model;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-
-
-using Duende.IdentityServer.Configuration;
-using Duende.IdentityServer.Configuration.DependencyInjection;
-using Duende.IdentityServer.Extensions;
-using Duende.IdentityServer.Services;
-using Microsoft.AspNetCore.Cors.Infrastructure;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Reflection;
 namespace IdentityServer
 {
 	public static class EFexten

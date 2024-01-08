@@ -310,5 +310,3 @@ G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\IdentityServer.genruntim
 G:\Web\Azure-GPT-master\IdentityServer\obj\Debug\net8.0\ref\IdentityServer.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\client.ncconf
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\IdentityServer\bin\Debug\net8.0\config.ncconf
-G:\Web\Azure-GPT-master\IdentityServer\bin\Debug\net8.0\client.ncconf
-G:\Web\Azure-GPT-master\IdentityServer\bin\Debug\net8.0\config.ncconf

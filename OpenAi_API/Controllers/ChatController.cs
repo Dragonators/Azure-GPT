@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -14,7 +13,7 @@ using System.Text.Json;
 
 namespace OpenAi_API.Controllers
 {
-    [ApiController]
+	[ApiController]
     [Route("[controller]")]
     [Authorize(Policy = "ChatApi")]
     public class ChatController : ControllerBase

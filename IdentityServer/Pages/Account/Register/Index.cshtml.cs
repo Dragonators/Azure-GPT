@@ -1,17 +1,10 @@
-﻿using Duende.IdentityServer.Events;
-using Duende.IdentityServer.Models;
+﻿using Duende.IdentityServer.Models;
 using Duende.IdentityServer.Services;
-using Duende.IdentityServer.Stores;
 using IdentityServer.Model;
-using IdentityServerHost.Pages.Login;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Microsoft.VisualBasic;
-using Serilog;
 
 namespace IdentityServerHost.Pages.Register
 {

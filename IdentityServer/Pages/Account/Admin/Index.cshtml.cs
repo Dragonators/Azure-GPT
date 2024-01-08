@@ -122,7 +122,6 @@ namespace IdentityServerHost.Pages.Admin
 		}
 		public async Task<IActionResult> OnPostValidRole([FromBody] Jdata_ data)
 		{
-			Log.Information((await _userManager.IsInRoleAsync((await _userManager.FindByIdAsync(data.id)), data.role)).ToString());
 			return new JsonResult((await _userManager.IsInRoleAsync((await _userManager.FindByIdAsync(data.id)),data.role)));
 		}
 	}

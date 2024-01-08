@@ -3,13 +3,11 @@ using Duende.IdentityServer.Services;
 using IdentityModel;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Identity;
-using System.Linq.Expressions;
 using System.Security.Claims;
-using System.Text.Json;
 
 namespace IdentityServer.Services
 {
-    public class ProfileService : IProfileService
+	public class ProfileService : IProfileService
     {
         protected UserManager<ApplicationUser> _userManager;
         protected RoleManager<IdentityRole> _roleManager;

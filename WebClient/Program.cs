@@ -1,11 +1,8 @@
 using Duende.Bff.Yarp;
 using IdentityModel;
-using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using static OpenAI.ObjectModels.SharedModels.IOpenAiModels;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,6 +1,5 @@
 ﻿using Duende.IdentityServer;
 using Duende.IdentityServer.Models;
-using IdentityModel;
 using IdentityServer.Model;
 using IdentityServerHost.Pages.Admin;
 using Mapster;
