@@ -9,12 +9,20 @@
       "PackagePath": "staticwebassets\\css\\GPT.css"
     },
     {
+      "Id": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\css\\GPTbtn.css",
+      "PackagePath": "staticwebassets\\css\\GPTbtn.css"
+    },
+    {
       "Id": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\css\\site.css",
       "PackagePath": "staticwebassets\\css\\site.css"
     },
     {
       "Id": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\favicon.ico",
       "PackagePath": "staticwebassets\\favicon.ico"
+    },
+    {
+      "Id": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\js\\Account.js",
+      "PackagePath": "staticwebassets\\js\\Account.js"
     },
     {
       "Id": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\js\\Chat.js",

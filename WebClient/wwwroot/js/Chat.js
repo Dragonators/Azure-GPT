@@ -1,7 +1,12 @@
 ﻿var sendButton = document.getElementById("sendbutton");
 var stopButton = document.getElementById("stopbutton");
 var newchatButton = document.getElementById("newchatbutton");
-var accessToken = getAccessToken();
+var backButton = document.getElementById("backbutton");
+var ensureEditButton =document.getElementById("ensureEdit");
+
+var editModal = new bootstrap.Modal(document.getElementById('editModal'), {
+    keyboard: false
+});
 var initDictionary = {};//某个navId对应的tab-pane是否已经获得详细数据
 
 prepareNavlink();
@@ -20,17 +25,36 @@ newchatButton.addEventListener("click", function (event) {
     createNewChatList();
     event.preventDefault();
 });
+backButton.addEventListener("click", function (event) {
+    window.location.href = "https://localhost:5002/";
+    event.preventDefault();
+});
+ensureEditButton.addEventListener("click", function (event) {
+    //获取当前选择的navlink的navId
+    let navId = document.querySelector('[aria-selected="true"]').getAttribute('data-bs-target').substring(1);
+    let form = document.forms["ReNameForm"];
+    let formdata = new FormData(form);
+    formdata.set('navId', navId);
+    fetch(`remote/Chat/UpdateNavNameAsync`, {
+        method: 'POST',
+        headers: {
+            "X-CSRF": "1"
+        },
+        body: formdata
+    })
+        .then(response => response.text())
+        .then(data => {
+            let intData = parseInt(data);
+            if (intData == 1) {
+                let navlink = document.querySelector(`a[data-bs-target="#${navId}"]`);
+                navlink.textContent = formdata.get("navName");
+                editModal.hide();
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    event.preventDefault();
+});
 
-function getAccessToken() {
-    let returnVal = "";
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("GET", "https://localhost:5002/UserToken", false);
-    xhr.send();
-    returnVal = xhr.responseText;
-
-    return returnVal;
-}
 function sendText() {
     //获取当前显示的tab-pane
     let messageList = document.querySelector('.tab-content').querySelector('.active');
@@ -64,7 +88,6 @@ function sendText() {
     }
     httpRequest.onprogress = function (e) {
         //处理响应数据
-        console.log(e.target.responseText);
         let markdown = e.target.responseText;
         let html = marked.parse(markdown);
         let scrolldiv = messageList.parentElement.parentElement;
@@ -83,8 +106,8 @@ function sendText() {
             this.abort();
             stopRequest = false;
             let xhr = new XMLHttpRequest();
-            xhr.open('POST', `https://localhost:7001/Chat/CancelOperation/${formdata.get("userId")}`, true);
-            xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+            xhr.open('POST', `remote/Chat/CancelOperation/${formdata.get("userId")}`, true);
+            xhr.setRequestHeader('X-CSRF', '1');
             xhr.send();
             xhr.onloadend = function () {
                 if (xhr.status == 200) console.log(xhr.statusText);
@@ -93,8 +116,8 @@ function sendText() {
         }
     };
 
-    httpRequest.open("POST", "https://localhost:7001/Chat/ChatAsStreamAsync", true);
-    httpRequest.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+    httpRequest.open("POST", "remote/Chat/ChatAsStreamAsync", true);
+    httpRequest.setRequestHeader('X-CSRF', '1');
     httpRequest.responseType = "text";
     httpRequest.send(formdata);
 }
@@ -120,6 +143,7 @@ function createNavlinkElement(guid, text) {
     let div = document.createElement('div');
     let Navlink = document.createElement('a');
     let delbtn = document.createElement('button');
+    let editbtn=document.createElement('button');
 
     Navlink.classList.add('nav-link');
     Navlink.setAttribute('data-bs-toggle', 'pill');
@@ -131,10 +155,10 @@ function createNavlinkElement(guid, text) {
     delbtn.innerHTML = `<i class="bi bi-trash3-fill"></i>`;
     //配置删除按钮相关事件
     delbtn.addEventListener('click', async function (event) {
-        await fetch(`https://localhost:7001/Chat/DeleteNavAsync/${guid}`, {
+        await fetch(`remote/Chat/DeleteNavAsync/${guid}`, {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer ${accessToken}`
+                "X-CSRF": "1"
             }
         }).then(response => response.text())
             .then(data => {
@@ -156,9 +180,17 @@ function createNavlinkElement(guid, text) {
         event.preventDefault();
     });
 
+    editbtn.classList.add("btn", "editbtn");
+    editbtn.innerHTML = `<i class="bi bi-pen-fill"></i>`;
+    editbtn.addEventListener("click",async function (event) {
+        editModal.show();
+        event.preventDefault();
+    });
+
     div.classList.add("nav-class");
     div.appendChild(Navlink);
     div.appendChild(delbtn);
+    div.appendChild(editbtn);
     return div;
 }
 function createGroupTitleElement(text) {
@@ -195,8 +227,14 @@ async function createNewChatList() {
     Navlink.addEventListener('shown.bs.tab', event => {
         let messageList = document.getElementById(guid);
         let scrolldiv = messageList.parentElement.parentElement;
-        if (event.relatedTarget !== null) event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+
+        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标
+        if (event.relatedTarget !== null) {
+            event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+            event.relatedTarget.parentElement.lastElementChild.previousElementSibling.style.display = "none";
+        }
         event.target.parentElement.lastElementChild.style.display = "block";
+        event.target.parentElement.lastElementChild.previousElementSibling.style.display = "block";
 
         scrolldiv.scrollTop = scrolldiv.scrollHeight;
     });
@@ -206,10 +244,10 @@ async function createNewChatList() {
 //获取navlink-tabpane之间的唯一标识符
 async function getGuid() {
     let guid;
-    await fetch(`https://localhost:7001/Chat/CreateNavIdAsync/${document.forms["ChatForm"].userId.value}`, {
+    await fetch(`remote/Chat/CreateNavIdAsync/${document.forms["ChatForm"].userId.value}`, {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer ${accessToken}`
+            "X-CSRF": "1"
         }
     })
         .then(response => response.text())//用text()而不是json()，因为返回的是一个字符串
@@ -261,10 +299,10 @@ async function prepareNavlink() {
     let groupL = document.getElementById("Longago");
 
     //获取navlink list
-    await fetch(`https://localhost:7001/Chat/GetNavAsync?userId=${document.forms["ChatForm"].userId.value}`, {
+    await fetch(`remote/Chat/GetNavAsync?userId=${document.forms["ChatForm"].userId.value}`, {
         method: 'GET',
         headers: {
-            'Authorization': `Bearer ${accessToken}`
+            "X-CSRF": "1"
         }
     })
         .then(response => response.json())
@@ -299,13 +337,20 @@ async function prepareNavlink() {
                     //延迟获取详细历史记录，避免页面卡顿
                     document.querySelector(`a[data-bs-target="#${item.navId}"]`).addEventListener('shown.bs.tab', async event => {
                         let messageList = document.getElementById(item.navId);
-                        if (event.relatedTarget !== null) event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+
+                        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标
+                        if (event.relatedTarget !== null) {
+                            event.relatedTarget.parentElement.lastElementChild.style.display = "none";
+                            event.relatedTarget.parentElement.lastElementChild.previousElementSibling.style.display = "none";
+                        }
                         event.target.parentElement.lastElementChild.style.display = "block";
+                        event.target.parentElement.lastElementChild.previousElementSibling.style.display = "block";
+
                         if (initDictionary[`${item.navId}`] === false) {
-                            await fetch(`https://localhost:7001/Chat/GetHisAsync?navId=${item.navId}`, {
+                            await fetch(`remote/Chat/GetHisAsync?navId=${item.navId}`, {
                                 method: 'GET',
                                 headers: {
-                                    'Authorization': `Bearer ${accessToken}`
+                                    "X-CSRF": "1"
                                 }
                             })
                                 .then(response => response.json())

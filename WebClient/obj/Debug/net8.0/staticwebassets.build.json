@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "A/sub95aw73QtHiD37NBvktCNo3d8Yqil1R82AZSVHs=",
+  "Hash": "gK/AR+tY2oj6NVKmTzlIpykDVgfxu8DKgaoX7snn8TQ=",
   "Source": "WebClient",
   "BasePath": "_content/WebClient",
   "Mode": "Default",
@@ -74,6 +74,25 @@
       "OriginalItemSpec": "wwwroot\\css\\GPT.css"
     },
     {
+      "Identity": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\css\\GPTbtn.css",
+      "SourceId": "WebClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\",
+      "BasePath": "_content/WebClient",
+      "RelativePath": "css/GPTbtn.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\GPTbtn.css"
+    },
+    {
       "Identity": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\css\\site.css",
       "SourceId": "WebClient",
       "SourceType": "Discovered",
@@ -110,6 +129,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\js\\Account.js",
+      "SourceId": "WebClient",
+      "SourceType": "Discovered",
+      "ContentRoot": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\",
+      "BasePath": "_content/WebClient",
+      "RelativePath": "js/Account.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Account.js"
     },
     {
       "Identity": "G:\\Web\\Azure-GPT-master\\WebClient\\wwwroot\\js\\Chat.js",

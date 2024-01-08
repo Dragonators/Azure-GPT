@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using OpenAI.Interfaces;
 using OpenAI.ObjectModels;
 using OpenAI.ObjectModels.RequestModels;
@@ -20,21 +22,23 @@ namespace OpenAi_API.Controllers
         private readonly IOpenAIService _openAiService;
         private readonly ILogger<ChatController> _logger;
         private readonly ChatDbContext _context;
+        private readonly IMemoryCache _memoryCache;
 		private static readonly ConcurrentDictionary<string, CancellationTokenSource> TokenSources = new();
 
-        public ChatController(IOpenAIService openAiService, ILogger<ChatController> logger,ChatDbContext context)
+        public ChatController(IOpenAIService openAiService, ILogger<ChatController> logger,ChatDbContext context,IMemoryCache memoryCache)
         {
             _openAiService = openAiService;
             _logger = logger;
             _context = context;
+            _memoryCache = memoryCache;
         }
         [HttpGet("GetNavAsync")]
         public async Task<IActionResult> GetNavAsync([FromQuery] string userId)
         {
-            var Navlinks = await _context.Navlinks.AsNoTracking()
-                .Where(i=>i.userId==userId)
-                .OrderByDescending(i=> i.latestAt)
-                .ToListAsync();//no chatmessages
+            var Navlinks=await _context.Navlinks.AsNoTracking()
+                    .Where(i=>i.userId==userId)
+                    .OrderByDescending(i=> i.latestAt)
+                    .ToListAsync();
             return new JsonResult(JsonSerializer.Serialize(Navlinks));
         }
         [HttpGet("GetHisAsync")]
@@ -120,7 +124,7 @@ namespace OpenAi_API.Controllers
                 await _context.SaveChangesAsync();
             }
 		}
-        //无缓存的获取指定长度的聊天记录
+        //有缓存的获取指定长度的聊天记录
         private async Task<List<ChatMessage>> CreatechatContext(string navId,int length=int.MaxValue)
         {
             var chatContext = new List<ChatMessage>();
@@ -169,7 +173,7 @@ namespace OpenAi_API.Controllers
         }
 
         [HttpPost("UpdateNavNameAsync")]
-        public async Task<int> UpdateNavNameAsync([FromQuery] string navId, [FromQuery]string navName)
+        public async Task<int> UpdateNavNameAsync([FromForm] string navId, [FromForm]string navName)
         {
             //在数据库中更新指定的navlink名称
             var navlink = await _context.Navlinks.FirstOrDefaultAsync(e => e.navId == navId);
@@ -179,33 +183,41 @@ namespace OpenAi_API.Controllers
         }
         private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
         {
-            var history = await _context.Navlinks.AsNoTracking()
-                .FirstOrDefaultAsync(i => i.navId == navId);
+            //如果缓存中没有聊天记录则从数据库中获取
+            var history=await _memoryCache.GetOrCreateAsync<Navlink>(navId, async entry =>
+            {
+                entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(60);
+                entry.SlidingExpiration = TimeSpan.FromMinutes(10);
+                var _history = await _context.Navlinks.AsNoTracking()
+                    .FirstOrDefaultAsync(i => i.navId == navId);
+                _context.Entry(_history)
+                    .Collection(b => b.chatMessages)
+                    .Load();
+                return _history;
+            });
             if (history is null) return null;
-            _context.Entry(history)
-                .Collection(b => b.chatMessages)
-                .Load();
             return history.chatMessages.OrderBy(i => i.creatAt).ToImmutableArray();
         }
-        //private async Task<IEnumerable<HistoryMessage>> CurrentChatHistory(string navId)
-        //{
-        //    var history = await _context.Navlinks.AsNoTracking()
-        //        .FirstOrDefaultAsync(i => i.navId == navId);
-        //    _context.Entry(history)
-        //        .Collection(b => b.chatMessages)
-        //        .Load();
-        //    return history.chatMessages.OrderBy(i => i.creatAt);
-        //}
         private async Task SaveChatRecord(string text,string navId,string role,DateTime time)
         {
-	        _context.Add(new HistoryMessage
+            //保存聊天记录到数据库
+            var message = new HistoryMessage
             {
-				message=text,
+                message = text,
                 creatAt = time,
                 navId = navId,
                 role = role
-			});
-	        await _context.SaveChangesAsync();
+            };
+            _context.Add(message);
+            await _context.SaveChangesAsync();
+
+            //更新缓存
+            Navlink navlink;
+            if(_memoryCache.TryGetValue(navId, out navlink))
+            {
+                navlink.chatMessages.Add(message);
+                _memoryCache.Set(navId, navlink);
+            }
 		}
 
 	}

@@ -14,11 +14,9 @@ namespace OpenAi_API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
             builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            //配置Swagger认证方式获取Toekn
             builder.Services.AddSwaggerGen(opt =>
             {
 				opt.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
@@ -71,7 +69,7 @@ namespace OpenAi_API
 			});
             builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", p =>
             {
-	            //oidc的服务地址(一定要用https!!)
+	            //oidc的服务地址
 	            p.Authority = "https://localhost:5001";//也就是IdentifyServer项目运行地址
 	            //设置jwt的验证参数(默认情况下是不需要此验证的)
 	            p.TokenValidationParameters = new TokenValidationParameters
@@ -87,15 +85,15 @@ namespace OpenAi_API
 	            {
 					//配置鉴定用户的规则，这里表示策略要求用户通过身份认证
 					opt.RequireAuthenticatedUser();
-		            //鉴定api范围的规则,这里表示策略要求用户具有名为 "scope" 的声明，其值为 "weather_api"
-		            opt.RequireClaim("scope", "chatcompletion_api");
+                    //鉴定api范围的规则,这里表示策略要求用户具有名为 "scope" 的声明，其值为 "chatcompletion_api"
+                    opt.RequireClaim("scope", "chatcompletion_api");
 	            });
             });
-
+            //使用内存缓存
+            builder.Services.AddMemoryCache();
 
 			var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();

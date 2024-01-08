@@ -10,11 +10,15 @@
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="~/css/GPT.css" type="text/css" />
+	<link rel="stylesheet" href="~/css/GPTbtn.css" type="text/css" />
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
 			<div class="col-md-2 sidebar history">
+				<button class="btn backbtn" id="backbutton" type="button">
+					<i class="bi bi-backspace-fill"></i>Back
+				</button>
 				<button class="btn btn-outline-light" id="newchatbutton" type="button">
 					<i class="bi bi-plus-circle"></i>
 					New Chat
@@ -44,9 +48,30 @@
 					</div>
 				</form>
 			</div>
-			
+
 		</div>
 	</div>
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+					<h5 class="modal-title" id="editModalLabel">ReName</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+					<form name="ReNameForm">
+					<div class="mb-3">
+						<label for="recipient-name" class="col-form-label">New Chat Label:</label>
+						<input type="text" class="form-control" id="recipient-name" name="navName">
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" id="ensureEdit">Ensure</button>
+			</div>
+		</div>
+	</div>
+</div>
 	<script src="~/lib/jquery/dist/jquery.min.js"></script>
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/Chat.js"></script>

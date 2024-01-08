@@ -1,0 +1,76 @@
+﻿.btn.delbtn {
+    position: absolute;
+    margin-right: 5px;
+    padding-left:3px;
+    top: 10%;
+    right: 0;
+    color: #d5d0d0;
+    z-index: 20;
+    display:none;
+}
+
+.btn.delbtn:hover {
+    color: #cd6855;
+}
+
+.btn.delbtn:active {
+    color: #7e4237;
+    border-color: transparent;
+}
+.btn.editbtn {
+    position: absolute;
+    margin-right: 30px;
+    top: 10%;
+    right: 0;
+    color: #d5d0d0;
+    display: none;
+}
+    .btn.editbtn:hover {
+        color: deepskyblue;
+    }
+    .btn.editbtn:active {
+        color: #007298;
+        border-color: transparent;
+    }
+.btn.btn-warning {
+    max-width: 600px; /* Adjusted max-width to match chat container */
+    width: 95px;
+}
+
+.btn.btn-primary {
+    max-width: 600px; /* Adjusted max-width to match chat container */
+    width: 95px;
+}
+
+.btn.btn-outline-light {
+    margin-top: 8%;
+    margin-bottom: 8%;
+    margin-left: 20%;
+    margin-right: 20%;
+    width: 60%;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.btn.backbtn {
+    position: fixed;
+    left: 0;
+    bottom: 1%;
+    margin-left: 2.5%;
+    width: 10.6%;
+    color: darkgrey;
+    transform: scale(1.5);
+    background-color: #212529;
+    z-index: 20;
+    border-radius: 0;
+}
+
+.btn.backbtn:hover {
+    color: deepskyblue;
+}
+
+.btn.backbtn:active {
+    color: #007298;
+    border-color: transparent;
+    background-color: #212529;
+}

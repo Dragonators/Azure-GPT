@@ -1,18 +1,77 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
-  margin-bottom: 60px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f7f7;
+    overflow-y: scroll;
+}
+    body::-webkit-scrollbar {
+        width: 12px;
+        height: auto;
+        display: none;
+    }
+
+body::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+body::-webkit-scrollbar-thumb {
+        background: #adadb3;
+        border: 4px solid transparent;
+        background-clip: content-box;
+        border-radius: 10px;
+    }
+.navbar {
+    box-shadow: 0 1px 3px #888888;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    border-bottom-width:0;
+}
+.footer {
+    font-size: 0.9rem;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    line-height: 60px;
+    background-color: #212529;
+    box-shadow: 0 -1px 3px #888888;
+    color: whitesmoke;
+}
+
+.footer a {
+    color: #007bff;
+}
+
+
+dd {
+    display: inline-block;
+    width: 100%;
+    height: auto;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+.container.main {
+    width: 100%;
+    height: 100%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+    .content {
+        text-align: center;
+        margin-top: 100px;
+        padding-bottom: 80px; /* Adjusted to prevent footer overlap */
+    }
+
+.content h1 {
+    font-size: 72px;
+    font-weight: 300;
+    margin-bottom: 40px;
+    color: #333;
+}
+
+.content p {
+    font-size: 24px;
+    font-weight: 300;
+    color: #666;
 }

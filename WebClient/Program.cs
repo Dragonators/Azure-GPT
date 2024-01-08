@@ -1,28 +1,28 @@
+using Duende.Bff.Yarp;
 using IdentityModel;
 using IdentityModel.Client;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using static OpenAI.ObjectModels.SharedModels.IOpenAiModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddRazorPages();
+
+builder.Services
+    .AddBff()
+    .AddRemoteApis();
+builder.Services.AddAuthorization();
+JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
 builder.Services.AddAuthentication(opt =>
 {
-	opt.DefaultScheme = "Cookies";
-	opt.DefaultChallengeScheme = "oidc";
+    opt.DefaultScheme = "Cookies";
+    opt.DefaultChallengeScheme = "oidc";
+    opt.DefaultSignOutScheme = "oidc";
 })
-	.AddCookie("Cookies", opt =>
-	{
-		opt.Events.OnSigningOut = async e =>
-		{
-			// revoke refresh token on sign-out
-			await e.HttpContext.RevokeUserRefreshTokenAsync();
-		};
-	})
+	.AddCookie("Cookies")
 	.AddOpenIdConnect("oidc", opt =>
 	{
 		opt.Authority = "https://localhost:5001";
@@ -60,21 +60,6 @@ builder.Services.AddAuthentication(opt =>
 
         opt.GetClaimsFromUserInfoEndpoint = true;
 	});
-builder.Services.AddAccessTokenManagement(options =>
-{
-	options.Client.Clients.Add("client1", new ClientCredentialsTokenRequest
-	{
-		Address = "https://localhost:5001/connect/token",
-		ClientId = "client",
-		ClientSecret = "secret",
-		Scope = "chatcompletion_api"
-	});
-});
-builder.Services.AddUserAccessTokenHttpClient("Chat_client", configureClient: client =>
-{
-	client.BaseAddress = new Uri("https://localhost:7001/");
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -91,17 +76,14 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseBff();
 app.UseAuthorization();
 
+app.MapBffManagementEndpoints();
+
 app.MapRazorPages().RequireAuthorization();
-app.MapGet("/UserToken", async (HttpContext httpcontext) =>
-{
-    var token = await httpcontext.GetUserAccessTokenAsync();
-    if (token != null)
-    {
-        return token;
-    }
-    return "";
-}).RequireAuthorization();;
+
+app.MapRemoteBffApiEndpoint("/remote", "https://localhost:7001")
+    .RequireAccessToken(Duende.Bff.TokenType.User);
 
 app.Run();
