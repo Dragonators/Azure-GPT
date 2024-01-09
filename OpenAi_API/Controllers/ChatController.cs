@@ -79,7 +79,7 @@ namespace OpenAi_API.Controllers
             {
 
                 Messages = chatContext,
-                Model = Models.Gpt_3_5_Turbo_1106,
+                Model = Models.Gpt_4_1106_preview,
                 Temperature = (float?)0.7,
                 //MaxTokens = 20//optional
             }, null, cancellationTokenSource.Token);
@@ -123,7 +123,7 @@ namespace OpenAi_API.Controllers
                 await _context.SaveChangesAsync();
             }
 		}
-        //有缓存的获取指定长度的聊天记录
+        //有缓存的获取指定长度的会话上下文
         private async Task<List<ChatMessage>> CreatechatContext(string navId,int length=int.MaxValue)
         {
             var chatContext = new List<ChatMessage>();
@@ -163,15 +163,17 @@ namespace OpenAi_API.Controllers
 
 			return navId;
 		}
-        [HttpPost("DeleteNavAsync/{navId}")]
+        [HttpDelete("DeleteNavAsync/{navId}")]
         public async Task<int> DeleteNavAsync(string navId)
         {
             //在数据库中删除指定的navlink
             _context.Remove<Navlink>(await _context.Navlinks.FirstOrDefaultAsync(e => e.navId == navId));
+            //删除对应缓存
+            _memoryCache.Remove(navId);
             return await _context.SaveChangesAsync();
         }
 
-        [HttpPost("UpdateNavNameAsync")]
+        [HttpPut("UpdateNavNameAsync")]
         public async Task<int> UpdateNavNameAsync([FromForm] string navId, [FromForm]string navName)
         {
             //在数据库中更新指定的navlink名称

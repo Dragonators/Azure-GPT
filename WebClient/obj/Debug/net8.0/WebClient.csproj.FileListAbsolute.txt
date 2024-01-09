@@ -6,7 +6,6 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\WebCli
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\WebClient.pdb
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Duende.AccessTokenManagement.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\IdentityModel.dll
-C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\IdentityModel.AspNetCore.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.OpenIdConnect.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.IdentityModel.JsonWebTokens.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.IdentityModel.Logging.dll
@@ -48,8 +47,6 @@ C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\CsvHel
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\MathNet.Numerics.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.Data.Analysis.dll
 C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.ML.DataView.dll
-C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\libman.json
-C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Newtonsoft.Json.dll
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Pages\appsettings.Development.json
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Pages\appsettings.json
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\WebClient.staticwebassets.runtime.json
@@ -105,3 +102,9 @@ G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Duende.BFF.Yarp.dll
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\System.IO.Hashing.dll
 G:\Web\Azure-GPT-master\WebClient\bin\Debug\net8.0\Yarp.ReverseProxy.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Duende.AccessTokenManagement.OpenIdConnect.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Duende.BFF.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Duende.BFF.Yarp.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\System.IO.Hashing.dll
+C:\Users\xuanhao.ji\source\repos\Azure-GPT-API\WebClient\bin\Debug\net8.0\Yarp.ReverseProxy.dll

@@ -53,6 +53,7 @@
 
 
     .sidebar .nav-link {
+
         color: #FFFFFF;
         margin-bottom: 5px;
         margin-left: 7px;
@@ -74,10 +75,14 @@
         margin-bottom: 5px;
         padding-left: 20px; /* Added padding to the left */
     }
-
-.nav-class {
-    position: relative
+a.nav-link.active > p {
+    width: calc(100% - 39px);
+    margin-bottom: 0px;
 }
+
+    .nav-class {
+        position: relative
+    }
 
 .tab-content {
     margin-left: auto;
@@ -145,12 +150,14 @@
     padding: 0;
     padding-bottom: 50px;
     background-color: #212529;
+    /*min-width:150px;*/
 }
 
 .col-md-10.chat {
     padding: 0;
     overflow-y: auto;
     height: calc(100vh - 78px); /* Adjusted height to match chat container */
+    
 }
 
     .col-md-10.chat::-webkit-scrollbar {
@@ -168,7 +175,6 @@
         background-clip: content-box;
         border-radius: 10px;
     }
-
 @media (max-width: 768px) {
     .col-md-2.history {
         float: left !important;
@@ -178,6 +184,12 @@
     .col-md-10.chat {
         float: left !important;
         width: 83.33% !important;
+    }
+}
+@media(max-width:684px){
+    a.nav-link.active > p {
+        width: 33px;
+        padding-top:21px;
     }
 }
 /*.cursor {

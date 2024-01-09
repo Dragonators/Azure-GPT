@@ -74,3 +74,21 @@
     border-color: transparent;
     background-color: #212529;
 }
+@media(max-width:684px) {
+
+    .btn.delbtn {
+        top: 0px;
+        padding-left: 41px;
+        width: 20px;
+        left: 0;
+        top:1%
+    }
+    .btn.editbtn {
+        top: 0px;
+        padding-left: 16px;
+        width: 20px;
+        left: 0;
+        top: 1%;
+        z-index:21;
+    }
+}

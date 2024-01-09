@@ -36,7 +36,7 @@ ensureEditButton.addEventListener("click", function (event) {
     let formdata = new FormData(form);
     formdata.set('navId', navId);
     fetch(`remote/Chat/UpdateNavNameAsync`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             "X-CSRF": "1"
         },
@@ -156,7 +156,7 @@ function createNavlinkElement(guid, text) {
     //配置删除按钮相关事件
     delbtn.addEventListener('click', async function (event) {
         await fetch(`remote/Chat/DeleteNavAsync/${guid}`, {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 "X-CSRF": "1"
             }
@@ -228,13 +228,15 @@ async function createNewChatList() {
         let messageList = document.getElementById(guid);
         let scrolldiv = messageList.parentElement.parentElement;
 
-        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标
+        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标，重新排版内部文本格式适配右侧按钮
         if (event.relatedTarget !== null) {
             event.relatedTarget.parentElement.lastElementChild.style.display = "none";
             event.relatedTarget.parentElement.lastElementChild.previousElementSibling.style.display = "none";
+            event.relatedTarget.innerHTML = event.relatedTarget.textContent;
         }
         event.target.parentElement.lastElementChild.style.display = "block";
         event.target.parentElement.lastElementChild.previousElementSibling.style.display = "block";
+        event.target.innerHTML = `<p>${event.target.textContent}</p>`;
 
         scrolldiv.scrollTop = scrolldiv.scrollHeight;
     });
@@ -338,13 +340,15 @@ async function prepareNavlink() {
                     document.querySelector(`a[data-bs-target="#${item.navId}"]`).addEventListener('shown.bs.tab', async event => {
                         let messageList = document.getElementById(item.navId);
 
-                        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标
+                        //隐藏上一个navlink的edit与del图标，显示当前navlink的edit与del图标，重新排版内部文本格式适配右侧按钮
                         if (event.relatedTarget !== null) {
                             event.relatedTarget.parentElement.lastElementChild.style.display = "none";
                             event.relatedTarget.parentElement.lastElementChild.previousElementSibling.style.display = "none";
+                            event.relatedTarget.innerHTML = event.relatedTarget.textContent;
                         }
                         event.target.parentElement.lastElementChild.style.display = "block";
                         event.target.parentElement.lastElementChild.previousElementSibling.style.display = "block";
+                        event.target.innerHTML = `<p>${event.target.textContent}</p>`;
 
                         if (initDictionary[`${item.navId}`] === false) {
                             await fetch(`remote/Chat/GetHisAsync?navId=${item.navId}`, {

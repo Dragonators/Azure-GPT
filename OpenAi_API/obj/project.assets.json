@@ -4360,23 +4360,25 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Dragonator\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\xuanhao.ji\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
+      "projectUniqueName": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
       "projectName": "OpenAi_API",
-      "projectPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\OpenAi_API.csproj",
-      "packagesPath": "C:\\Users\\Dragonator\\.nuget\\packages\\",
-      "outputPath": "G:\\Web\\Azure-GPT-master\\OpenAi_API\\obj\\",
+      "projectPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\OpenAi_API.csproj",
+      "packagesPath": "C:\\Users\\xuanhao.ji\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\xuanhao.ji\\source\\repos\\Azure-GPT-API\\OpenAi_API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\Dragonator\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\xuanhao.ji\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

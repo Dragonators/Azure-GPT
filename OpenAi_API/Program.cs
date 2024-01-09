@@ -42,7 +42,7 @@ namespace OpenAi_API
             builder.Services.AddDbContext<ChatDbContext>(options =>
             {
                 var Sqlbuilder = new SqlConnectionStringBuilder();
-				Sqlbuilder.DataSource = @"DESKTOP-CABO6T6";
+				Sqlbuilder.DataSource = @"SHA-XHJI-D1\SQLEXPRESS";
 				Sqlbuilder.IntegratedSecurity = true;
 				Sqlbuilder.InitialCatalog = "ChatServer";
 				Sqlbuilder.TrustServerCertificate = true;
