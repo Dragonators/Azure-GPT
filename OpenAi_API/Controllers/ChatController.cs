@@ -191,6 +191,7 @@ namespace OpenAi_API.Controllers
                 entry.SlidingExpiration = TimeSpan.FromMinutes(10);
                 var _history = await _context.Navlinks.AsNoTracking()
                     .FirstOrDefaultAsync(i => i.navId == navId);
+                if (_history == null) return null;
                 _context.Entry(_history)
                     .Collection(b => b.chatMessages)
                     .Load();

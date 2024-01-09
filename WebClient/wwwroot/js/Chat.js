@@ -47,7 +47,7 @@ ensureEditButton.addEventListener("click", function (event) {
             let intData = parseInt(data);
             if (intData == 1) {
                 let navlink = document.querySelector(`a[data-bs-target="#${navId}"]`);
-                navlink.textContent = formdata.get("navName");
+                navlink.innerHTML = `<p>${formdata.get("navName")}</p>`;
                 editModal.hide();
             }
         })
