@@ -15,7 +15,7 @@
 else
 {
 	int index = 0;
-	foreach (var user in Model._userManager.Users.Where(d => !d.tdIsDelete).OrderBy(d => d.UserName).ToList())
+	foreach (var user in Model.IdsUsers)
 	{
 		<!-- 创建一个包含导航栏和内容区域的结构 -->
 		<div class="card m-3">

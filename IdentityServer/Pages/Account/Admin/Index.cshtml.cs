@@ -1,4 +1,5 @@
-﻿using IdentityServer;
+﻿using System.Collections.Immutable;
+using IdentityServer;
 using IdentityServer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Serilog;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityServerHost.Pages.Admin
 {
@@ -16,6 +18,8 @@ namespace IdentityServerHost.Pages.Admin
 		public RoleManager<IdentityRole> _roleManager { get; set; }
 		[BindProperty]
 		public CreateInputModel Input { get; set; }
+
+		public ImmutableArray<ApplicationUser> IdsUsers { get; set; }
 		public IndexModel(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			_userManager = userManager;
@@ -24,6 +28,7 @@ namespace IdentityServerHost.Pages.Admin
 
 		public void OnGet()
         { 
+			IdsUsers= _userManager.Users.AsNoTracking().Where(d => !d.tdIsDelete).OrderBy(d => d.UserName).ToImmutableArray();
         }
 		public async Task<IActionResult> OnPostDelete(string id)
 		{
