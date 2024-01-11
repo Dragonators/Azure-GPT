@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using System.Collections;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -8,6 +9,7 @@ using OpenAI.ObjectModels.RequestModels;
 using OpenAi_API.Model;
 using System.Collections.Concurrent;
 using System.Collections.Immutable;
+using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Text.Json;
 
@@ -38,22 +40,33 @@ namespace OpenAi_API.Controllers
                     .Where(i=>i.userId==userId)
                     .OrderByDescending(i=> i.latestAt)
                     .ToListAsync();
-            return new JsonResult(JsonSerializer.Serialize(Navlinks));
+            return new JsonResult(Navlinks);
         }
         [HttpGet("GetHisAsync")]
         public async Task<IActionResult> GetHisAsync([FromQuery] string navId)
         {
-            return new JsonResult(JsonSerializer.Serialize(await CurrentChatHistory(navId)));
+            return new JsonResult(await CurrentChatHistory(navId));
         }
         [HttpGet("GetHisAsStreamAsync")]
         public async Task<IActionResult> GetHisAsStreamAsync([FromQuery] string navId)
         {
             return new JsonResult(JsonSerializer.Serialize(await CurrentChatHistory(navId)));
         }
-        [HttpPost("ChatAsStreamAsync")]
-        public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId, [FromForm] string prompt="")
+        [HttpGet("GetChatModel")]
+        public ActionResult<List<string>> GetChatModel()
         {
-            var cancellationTokenSource = new CancellationTokenSource();
+	        var chatmodels = new List<string>();
+	        for (int i = 36; i <= 51; i++)
+			{
+				if (i == 37) continue;
+				chatmodels.Add(((Models.Model)i).EnumToString());
+			}
+	        return chatmodels;
+        }
+		[HttpPost("ChatAsStreamAsync")]
+        public async Task SendMessageAsStreamAsync([FromForm] string userId, [FromForm]string message, [FromForm]string navId, [FromForm] string prompt = "", [FromForm]string model= "gpt-3.5-turbo-1106")
+        {
+	        var cancellationTokenSource = new CancellationTokenSource();
             if (!TokenSources.TryAdd(userId, cancellationTokenSource))
             {
 				TokenSources[userId].Cancel();
@@ -79,7 +92,7 @@ namespace OpenAi_API.Controllers
             {
 
                 Messages = chatContext,
-                Model = Models.Gpt_4_1106_preview,
+                Model = model,
                 Temperature = (float?)0.7,
                 //MaxTokens = 20//optional
             }, null, cancellationTokenSource.Token);
@@ -135,7 +148,7 @@ namespace OpenAi_API.Controllers
             return chatContext;
         }
         [HttpPost("CancelOperation/{userId}")]
-        public ActionResult CancelOperation(string userId)
+        public IActionResult CancelOperation(string userId)
         {
             if (TokenSources.ContainsKey(userId))
             {

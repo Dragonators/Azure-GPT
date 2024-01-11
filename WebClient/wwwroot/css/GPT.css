@@ -135,7 +135,8 @@ a.nav-link.active > p {
 
     .chat-input .input-group {
         max-width: 600px; /* Adjusted max-width to match chat container */
-        margin: auto;
+        margin-right: auto;
+        margin-left:auto;
     }
 
 .container-fluid {
@@ -190,6 +191,20 @@ a.nav-link.active > p {
     a.nav-link.active > p {
         width: 33px;
         padding-top:21px;
+    }
+}
+@media(max-width:1250px) {
+    .chat-input .input-group {
+        margin-left: 200px;
+    }
+}
+@media(max-width:1019px) {
+    .btn.btn-hornets {
+        display:none;
+    }
+    .chat-input .input-group {
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 /*.cursor {

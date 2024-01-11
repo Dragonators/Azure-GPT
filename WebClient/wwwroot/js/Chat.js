@@ -79,6 +79,7 @@ function sendText() {
     let gptTextElement = gptCardElement.querySelector(".text");//gpt文本区域，修改其innerHTML展示流式对话
 
     formdata.set('navId', messageList.id);
+    formdata.set('model', document.querySelector('.dropdown-toggle').value);
 
     httpRequest.onloadstart = function (e) {
         //cursorElement.style.display = 'inline-block';
@@ -309,7 +310,7 @@ async function prepareNavlink() {
     })
         .then(response => response.json())
         .then(data => {
-            data = JSON.parse(data);
+            //data = JSON.parse(data);
             if (data !== null) {
                 data.forEach(item => {
                     date = new Date(item.latestAt);
@@ -359,7 +360,7 @@ async function prepareNavlink() {
                             })
                                 .then(response => response.json())
                                 .then(data => {
-                                    data = JSON.parse(data);
+                                    //data = JSON.parse(data);
                                     if (data !== null) {
 
 

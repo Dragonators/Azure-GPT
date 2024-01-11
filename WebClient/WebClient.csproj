@@ -7,6 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\js\Models.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\js\Models.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Betalgo.OpenAI.Utilities" Version="7.0.4" />
     <PackageReference Include="Duende.AccessTokenManagement" Version="2.1.0" />
     <PackageReference Include="Duende.BFF" Version="2.2.0" />
@@ -16,6 +24,10 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\lib\marked\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\js\Models.js" />
   </ItemGroup>
 
   <ItemGroup>

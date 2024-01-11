@@ -48,7 +48,8 @@ namespace OpenAi_API
 				Sqlbuilder.TrustServerCertificate = true;
 				options.UseSqlServer(Sqlbuilder.ConnectionString);
 			});
-            //CORS
+            //CORS no need for BFF
+            /*
             builder.Services.AddCors(options =>
             {
 	            options.AddPolicy("AllowSpecificOrigin",
@@ -67,6 +68,7 @@ namespace OpenAi_API
 				            .AllowAnyMethod();
 		            });
 			});
+            */
             builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", p =>
             {
 	            //oidc的服务地址
@@ -108,7 +110,7 @@ namespace OpenAi_API
 
             app.UseAuthorization();
 
-            app.UseCors("AllowAll");
+            //app.UseCors("AllowAll");
 
             app.MapControllers();//.RequireAuthorization("OpenAIApiScope");//为路由系统中的所有 控制器API 端点设置策略;
 

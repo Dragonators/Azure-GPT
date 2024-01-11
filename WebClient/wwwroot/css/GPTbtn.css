@@ -74,6 +74,12 @@
     border-color: transparent;
     background-color: #212529;
 }
+.btn-group.modelbtn {
+    margin-left:0;
+    margin-right: 0;
+    position:fixed;
+    width:7%;
+}
 @media(max-width:684px) {
 
     .btn.delbtn {

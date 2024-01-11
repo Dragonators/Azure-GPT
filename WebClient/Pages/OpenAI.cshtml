@@ -32,8 +32,15 @@
 					<br>
 				</div>
 				<form name="ChatForm" class="needs-validation" novalidate>
-					<input type="hidden" name="userId" value=@User.Claims.FirstOrDefault(c => c.Type == "sub").Value />
+					<input type="hidden" name="userId" value=@User.Claims.FirstOrDefault(c => c.Type == "sub").Value>
 					<div class="chat-input">
+						<div class="btn-group modelbtn dropup" role="group" aria-label="Type">
+							<button type="button" class="btn btn-hornets dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+								gpt-3.5-turbo-1106
+							</button>
+							<ul class="dropdown-menu">
+							</ul>
+						</div>
 						<div class="input-group">
 							<button class="btn btn-warning" id="stopbutton" type="button" disabled>
 								<i class="bi bi-x-circle-fill"></i>
@@ -76,6 +83,7 @@
 	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="~/js/Chat.js"></script>
 	<script src="~/js/resize.js"></script>
+	<script src="~/js/Models.js"></script>
 	<script src="~/lib/marked/marked.min.js"></script>
 </body>
 </html>
