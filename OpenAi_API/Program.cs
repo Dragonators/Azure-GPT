@@ -41,34 +41,8 @@ namespace OpenAi_API
             builder.Services.AddOpenAIService();
             builder.Services.AddDbContext<ChatDbContext>(options =>
             {
-                var Sqlbuilder = new SqlConnectionStringBuilder();
-				Sqlbuilder.DataSource = @"SHA-XHJI-D1\SQLEXPRESS";
-				Sqlbuilder.IntegratedSecurity = true;
-				Sqlbuilder.InitialCatalog = "ChatServer";
-				Sqlbuilder.TrustServerCertificate = true;
-				options.UseSqlServer(Sqlbuilder.ConnectionString);
+				options.UseSqlServer(builder.Configuration.GetConnectionString("Home_ChatAPI"));
 			});
-            //CORS no need for BFF
-            /*
-            builder.Services.AddCors(options =>
-            {
-	            options.AddPolicy("AllowSpecificOrigin",
-		            builder =>
-		            {
-			            
-			            builder.WithOrigins("https://localhost:5002")
-				            .AllowAnyHeader()
-				            .AllowAnyMethod();
-		            });
-	            options.AddPolicy("AllowAll",
-		            builder =>
-		            {
-			            builder.AllowAnyOrigin()
-				            .AllowAnyHeader()
-				            .AllowAnyMethod();
-		            });
-			});
-            */
             builder.Services.AddAuthentication("Bearer").AddJwtBearer("Bearer", p =>
             {
 	            //oidc的服务地址
@@ -109,8 +83,6 @@ namespace OpenAi_API
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
-
-            //app.UseCors("AllowAll");
 
             app.MapControllers();//.RequireAuthorization("OpenAIApiScope");//为路由系统中的所有 控制器API 端点设置策略;
 

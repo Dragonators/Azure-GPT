@@ -20,7 +20,7 @@ namespace IdentityServer
 			builder.Services.AddRazorPages();//VIEW
 
 			builder.Services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(Sqlbuilder.ConnectionString));
+				options.UseSqlServer(builder.Configuration.GetConnectionString("Home_IDP")));
 			builder.Services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
 			{
 				opt.Password.RequireNonAlphanumeric = false;
@@ -39,12 +39,12 @@ namespace IdentityServer
                 })
 				.AddConfigurationStore(opt =>
 				{
-					opt.ConfigureDbContext = d => d.UseSqlServer(Sqlbuilder.ConnectionString,
+					opt.ConfigureDbContext = d => d.UseSqlServer(builder.Configuration.GetConnectionString("Home_IDP"),
 						sql => sql.MigrationsAssembly(migrationsAssembly));//search
 				})
 				.AddOperationalStore(opt =>
 				{
-					opt.ConfigureDbContext = d => d.UseSqlServer(Sqlbuilder.ConnectionString,
+					opt.ConfigureDbContext = d => d.UseSqlServer(builder.Configuration.GetConnectionString("Home_IDP"),
 						sql => sql.MigrationsAssembly(migrationsAssembly));
 					opt.EnableTokenCleanup = true;
 				})
@@ -72,15 +72,5 @@ namespace IdentityServer
 
             return app;
 		}
-		static HostingExtensions()
-		{
-			Sqlbuilder = new SqlConnectionStringBuilder();
-			Sqlbuilder.DataSource = @"SHA-XHJI-D1\SQLEXPRESS";
-			Sqlbuilder.IntegratedSecurity = true;
-			Sqlbuilder.InitialCatalog = "IdentityServer";
-			Sqlbuilder.TrustServerCertificate = true;//?
-			strc = "Server=tcp:dragonator.database.windows.net,1433;Initial Catalog=IdentityServer;Persist Security Info=False;User ID=CloudSA5ac73c49;Password=Abcd1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
-
-        }
 	}
 }
